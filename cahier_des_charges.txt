@@ -60,4 +60,49 @@ Github
     README qui explique le processus d'installation sur un serveur local (en anglais)
     modele conceptuel des donnees
 
-    
+
+Étapes à suivre :
+1. Préparation du Projet
+    Clarifie les exigences et fonctionnalités.
+    Dessine le modèle conceptuel des données (MCD) pour structurer la base de données.
+    Configuration de l'environnement :
+    Installe PHP, PostgreSQL, Apache (si ce n'est pas encore fait).
+    Configure un environnement de développement local (WAMP, LAMP, XAMPP, etc.).
+    Initialise un dépôt GitHub.
+2. Modélisation des Données
+    Crée un script SQL pour le modèle conceptuel des données :
+    Tables pour les utilisateurs, comptes bancaires, transactions.
+    Relations entre les tables (clés primaires et étrangères).
+3. Développement Backend (PHP + PostgreSQL)
+    Structure MVC :
+        Crée les répertoires pour Models, Views, et Controllers.
+    Gestion des Utilisateurs :
+        Implémente l'inscription et la gestion des rôles (client/admin).
+    Gestion des Comptes Bancaires :
+        Implémente la création de comptes avec des règles spécifiques (5 comptes max, types de compte).
+    Transactions Bancaires :
+        Implémente les dépôts, retraits, virements avec validation.
+    Gestion des Administrateurs :
+        Implémente les fonctionnalités pour visualiser les clients et superviser les transactions.
+4. Développement Frontend (HTML, CSS, JS)
+    Crée les pages pour l'inscription, la gestion des comptes, et les transactions.
+    Assure une interface utilisateur intuitive et responsive.
+    Ajoute des validations côté client (JS).
+5. Sécurité
+    Implémente le chiffrement des mots de passe (ex: password_hash() en PHP).
+    Valide les données saisies (côté client et serveur).
+    Assure la protection contre les failles courantes (SQL injection, XSS).
+6. Documentation
+    Rédige un fichier README.md :
+        Décrit comment cloner le projet et le configurer localement.
+        Explique les principales fonctionnalités.
+        Inclut le script SQL pour créer la base de données.
+        Fournit le modèle conceptuel des données en diagramme.
+7. Contrôle de Version (Git)
+    Crée une branche principale (main ou master).
+    Fais des commits réguliers avec des messages clairs en anglais.
+    Utilise des branches pour développer des fonctionnalités spécifiques, puis fusionne dans la branche principale.
+8. Déploiement et Test
+    Teste le projet sur un serveur local.
+    Corrige les bugs et optimise le code.
+    Prépare le projet pour une démonstration ou un déploiement sur un serveur en ligne
