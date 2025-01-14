@@ -1,0 +1,63 @@
+Demande:
+
+1. Création des utilisateurs
+    Inscription : création d'un compte utilisateurs
+        nom
+        prenom
+        telephone
+        mdp
+        email
+        adresse
+        ville
+        situation
+    2 roles
+        clients/ utilisateurs standard
+        Admin
+
+2. Création des comptes bancaires
+    Création de compte
+        un clients ne peut pas avoir plus de 5 comptes bancaires
+        2 types de compte : Epargne, Courant
+        il est impossible d'ouvrir un compte épargne sans solde initial
+        possiblité de découvert de 200 euros max
+
+3. Transactions bancaires
+    Depots
+        ajouter un montant spécifique à un compte
+    Retrait
+        soustraire un montant spécifié (dans la limite du solde)
+    Virement 
+        transfert d'argent entre 2 comptes
+    Transaction
+        date et heure
+        type
+        montant 
+        statut
+4. Gestion des administrateurs 
+    Visualiser les clients
+    Superviser les Transactions
+        consulter l'historique des Transactions
+        annuler une Transaction
+    Bloque/debloquer des comptes
+
+5. Sécurité 
+    Chiffrement des mdp
+    Validation des données saisies
+
+Spécification Technique 
+
+PHP (optionel : framework)
+Base de données : postgres
+Serveur web : Apache etc
+Front : html , css, js
+Architecture : MVC
+
+Github
+    indiquer la branche principale
+    fichier de script (sql) pour la base de données 
+    faire des commits reguliers
+    messages des commits en anglais
+    README qui explique le processus d'installation sur un serveur local (en anglais)
+    modele conceptuel des donnees
+
+    
