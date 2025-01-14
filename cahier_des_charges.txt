@@ -20,6 +20,7 @@ Demande:
         2 types de compte : Epargne, Courant
         il est impossible d'ouvrir un compte épargne sans solde initial
         possiblité de découvert de 200 euros max
+    Fermeture de compte 
 
 3. Transactions bancaires
     Depots
