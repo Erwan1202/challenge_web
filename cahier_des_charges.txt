@@ -73,11 +73,11 @@ Github
         Initialise un dépôt GitHub. OK
 2. Modélisation des Données
     Crée un script SQL pour le modèle conceptuel des données :
-        Tables pour les utilisateurs, comptes bancaires, transactions. 
-        Relations entre les tables (clés primaires et étrangères).
+        Tables pour les utilisateurs, comptes bancaires, transactions. OK
+        Relations entre les tables (clés primaires et étrangères). OK
 3. Développement Backend (PHP + PostgreSQL)
     Structure MVC :
-        Crée les répertoires pour Models, Views, et Controllers.
+        Crée les répertoires pour Models, Views, et Controllers. OK
     Gestion des Utilisateurs :
         Implémente l'inscription et la gestion des rôles (client/admin).
     Gestion des Comptes Bancaires :
