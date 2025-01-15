@@ -1,0 +1,12 @@
+{% for compte in comptes %}
+    <tr>
+        <td>{{ compte.numeroDeCompte }}</td>
+        <td>{{ compte.type }}</td>
+        <td>{{ compte.solde }}</td>
+        <td>{{ compte.decouvertAutorise }}</td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="4">Aucun compte bancaire trouvé.</td>
+    </tr>
+{% endfor %}

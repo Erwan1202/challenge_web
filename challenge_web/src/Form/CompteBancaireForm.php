@@ -13,8 +13,8 @@ class CompteBancaire
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 20, unique: true)]
-    private $numero;
+    #[ORM\Column(name: 'numero_de_compte', type: 'integer', unique: true)]
+    private $numeroDeCompte;
 
     #[ORM\Column(type: 'string', length: 50)]
     private $type; // 'Courant' ou 'Epargne'
@@ -23,25 +23,25 @@ class CompteBancaire
     private $solde;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $decouvertMax = 200.00; // Seulement pour les comptes Courant
+    private $decouvertAutorise = 200.00; // Seulement pour les comptes Courant
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'comptesBancaires')]
     #[ORM\JoinColumn(nullable: false)]
-    private $proprietaire;
+    private $utilisateur;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNumero(): ?string
+    public function getNumeroDeCompte(): ?int
     {
-        return $this->numero;
+        return $this->numeroDeCompte;
     }
 
-    public function setNumero(string $numero): self
+    public function setNumeroDeCompte(int $numeroDeCompte): self
     {
-        $this->numero = $numero;
+        $this->numeroDeCompte = $numeroDeCompte;
 
         return $this;
     }
@@ -58,38 +58,38 @@ class CompteBancaire
         return $this;
     }
 
-    public function getSolde(): ?string
+    public function getSolde(): ?float
     {
         return $this->solde;
     }
 
-    public function setSolde(string $solde): self
+    public function setSolde(float $solde): self
     {
         $this->solde = $solde;
 
         return $this;
     }
 
-    public function getDecouvertMax(): ?string
+    public function getDecouvertAutorise(): ?float
     {
-        return $this->decouvertMax;
+        return $this->decouvertAutorise;
     }
 
-    public function setDecouvertMax(?string $decouvertMax): self
+    public function setDecouvertAutorise(?float $decouvertAutorise): self
     {
-        $this->decouvertMax = $decouvertMax;
+        $this->decouvertAutorise = $decouvertAutorise;
 
         return $this;
     }
 
-    public function getProprietaire(): ?Utilisateur
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->proprietaire;
+        return $this->utilisateur;
     }
 
-    public function setProprietaire(?Utilisateur $proprietaire): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->proprietaire = $proprietaire;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

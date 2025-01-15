@@ -5,10 +5,10 @@
 {% block body %}
 <h1>Détails du Compte Bancaire</h1>
 
-<p>Numéro: {{ compte.numero }}</p>
+<p>Numéro de compte: {{ compte.numeroDeCompte }}</p>
 <p>Type: {{ compte.type }}</p>
 <p>Solde: {{ compte.solde }}</p>
-<p>Propriétaire: {{ compte.proprietaire.nom }} {{ compte.proprietaire.prenom }}</p>
+<p>Propriétaire: {{ compte.utilisateur.nom }} {{ compte.utilisateur.prenom }}</p>
 
 <h2>Transactions</h2>
 <table>
@@ -23,7 +23,7 @@
     <tbody>
         {% for transaction in compte.transactions %}
             <tr>
-                <td>{{ transaction.date|date('d/m/Y H:i') }}</td>
+                <td>{{ transaction.dateHeure|date('d/m/Y H:i') }}</td>
                 <td>{{ transaction.type }}</td>
                 <td>{{ transaction.montant }}</td>
                 <td>{{ transaction.statut }}</td>
@@ -36,4 +36,5 @@
     </tbody>
 </table>
 
-<a href="{{ path('app_compte_bancaire') }}
+<a href="{{ path('app_compte_bancaire_index') }}">Retour à la liste</a>
+{% endblock %}
