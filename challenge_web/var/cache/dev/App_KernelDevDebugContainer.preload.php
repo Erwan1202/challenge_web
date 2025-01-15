@@ -10,6 +10,7 @@ if (in_array(PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
 }
 
 require dirname(__DIR__, 3).''.\DIRECTORY_SEPARATOR.'vendor/autoload.php';
+
 (require __DIR__.'/App_KernelDevDebugContainer.php')->set(\ContainerQ8e3HxA\App_KernelDevDebugContainer::class, null);
 require __DIR__.'/ContainerQ8e3HxA/UriSignerGhostB68a0a1.php';
 require __DIR__.'/ContainerQ8e3HxA/EntityManagerGhost614a58f.php';
@@ -275,8 +276,10 @@ $classes[] = 'Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher
 $classes[] = 'Symfony\Component\DependencyInjection\ServiceLocator';
 $classes[] = 'Symfony\Component\HttpKernel\Debug\VirtualRequestStack';
 $classes[] = 'App\Controller\CompteBancaireController';
+
 $classes[] = 'App\Controller\TransactionController';
 $classes[] = 'App\Controller\UtilisateurController';
+
 $classes[] = 'App\Repository\CompteBancaireRepository';
 $classes[] = 'App\Repository\TransactionRepository';
 $classes[] = 'App\Repository\UtilisateurRepository';
@@ -417,7 +420,9 @@ $classes[] = 'Symfony\Component\Form\ChoiceList\Factory\PropertyAccessDecorator'
 $classes[] = 'Symfony\Component\Form\ChoiceList\Factory\DefaultChoiceListFactory';
 $classes[] = 'Symfony\Component\Form\FormFactory';
 $classes[] = 'Symfony\Component\Form\Extension\PasswordHasher\EventListener\PasswordHasherListener';
+
 $classes[] = 'Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher';
+
 $classes[] = 'Symfony\Component\Form\FormRegistry';
 $classes[] = 'Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension';
 $classes[] = 'Symfony\Component\Form\Extension\DataCollector\Proxy\ResolvedTypeFactoryDataCollectorProxy';
@@ -556,7 +561,8 @@ $classes[] = 'Symfony\Component\Security\Core\Role\RoleHierarchy';
 $classes[] = 'Symfony\Bundle\SecurityBundle\Routing\LogoutRouteLoader';
 $classes[] = 'Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage';
 $classes[] = 'Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage';
-$classes[] = 'Symfony\Component\Security\Core\User\InMemoryUserProvider';
+$classes[] = 'Symfony\Bridge\Doctrine\Security\User\EntityUserProvider';
+$classes[] = 'Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher';
 $classes[] = 'Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator';
 $classes[] = 'Symfony\Component\Serializer\DataCollector\SerializerDataCollector';
 $classes[] = 'Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory';
@@ -677,10 +683,3 @@ $classes[] = 'Symfony\Bundle\WebProfilerBundle\Csp\NonceGenerator';
 $classes[] = 'Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener';
 
 $preloaded = Preloader::preload($classes);
-
-$classes = [];
-$classes[] = 'Symfony\\Component\\Routing\\Generator\\CompiledUrlGenerator';
-$classes[] = 'Symfony\\Bundle\\FrameworkBundle\\Routing\\RedirectableCompiledUrlMatcher';
-$classes[] = 'Symfony\\Component\\Validator\\Mapping\\ClassMetadata';
-$classes[] = 'Symfony\\Component\\Form\\Extension\\Validator\\Constraints\\Form';
-$preloaded = Preloader::preload($classes, $preloaded);
