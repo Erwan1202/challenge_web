@@ -19,9 +19,11 @@ return [
     '_profiler_exception' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::body'], [], [['text', '/exception'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::stylesheet'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     'app_compte_bancaire' => [[], ['_controller' => 'App\\Controller\\CompteBancaireController::index'], [], [['text', '/compte/bancaire']], [], [], []],
+    'app_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'app_transaction' => [[], ['_controller' => 'App\\Controller\\TransactionController::index'], [], [['text', '/transaction']], [], [], []],
     'app_utilisateur' => [[], ['_controller' => 'App\\Controller\\UtilisateurController::index'], [], [['text', '/utilisateur']], [], [], []],
     'App\Controller\CompteBancaireController::index' => [[], ['_controller' => 'App\\Controller\\CompteBancaireController::index'], [], [['text', '/compte/bancaire']], [], [], []],
+    'App\Controller\RegistrationController::register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'App\Controller\TransactionController::index' => [[], ['_controller' => 'App\\Controller\\TransactionController::index'], [], [['text', '/transaction']], [], [], []],
     'App\Controller\UtilisateurController::index' => [[], ['_controller' => 'App\\Controller\\UtilisateurController::index'], [], [['text', '/utilisateur']], [], [], []],
 ];
