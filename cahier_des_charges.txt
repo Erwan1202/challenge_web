@@ -102,7 +102,7 @@ Github
         Fournit le modèle conceptuel des données en diagramme.
 7. Contrôle de Version (Git)
     Crée une branche principale (main ou master).
-    Fais des commits réguliers avec des messages clairs en anglais.
+    Fais des commits réguliers avNec des messages clairs en anglais.
     Utilise des branches pour développer des fonctionnalités spécifiques, puis fusionne dans la branche principale.
 8. Déploiement et Test
     Teste le projet sur un serveur local.
