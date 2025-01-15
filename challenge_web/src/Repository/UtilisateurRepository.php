@@ -19,7 +19,8 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         parent::__construct($registry, Utilisateur::class);
     }
 
-    /
+    
+    /**
      * @return Utilisateur[] Returns an array of Utilisateur objects filtered by role
      */
     public function findByRole(string $role): array
@@ -56,3 +57,23 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
+        /**
+     * Used to upgrade (rehash) the user's password automatically over time.
+     */
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    {
+        if (!$user instanceof Utilisateur) {
+            throw new \InvalidArgumentException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+        }
+
+        // Mettre à jour le mot de passe de l'utilisateur
+        $user->setPassword($newHashedPassword);
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+
+
+}

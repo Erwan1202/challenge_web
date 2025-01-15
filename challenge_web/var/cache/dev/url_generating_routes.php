@@ -19,11 +19,11 @@ return [
     '_profiler_exception' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::body'], [], [['text', '/exception'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::stylesheet'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     'app_compte_bancaire' => [[], ['_controller' => 'App\\Controller\\CompteBancaireController::index'], [], [['text', '/compte/bancaire']], [], [], []],
-
     'app_compte_bancaire_new' => [[], ['_controller' => 'App\\Controller\\CompteBancaireController::new'], [], [['text', '/compte/bancaire/new']], [], [], []],
     'app_compte_bancaire_show' => [['id'], ['_controller' => 'App\\Controller\\CompteBancaireController::show'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/compte/bancaire']], [], [], []],
     'app_compte_bancaire_edit' => [['id'], ['_controller' => 'App\\Controller\\CompteBancaireController::edit'], [], [['text', '/edit'], ['variable', '/', '[^/]++', 'id', true], ['text', '/compte/bancaire']], [], [], []],
     'app_compte_bancaire_delete' => [['id'], ['_controller' => 'App\\Controller\\CompteBancaireController::delete'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/compte/bancaire']], [], [], []],
+    'app_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'app_transaction' => [[], ['_controller' => 'App\\Controller\\TransactionController::index'], [], [['text', '/transaction']], [], [], []],
     'app_transaction_new' => [[], ['_controller' => 'App\\Controller\\TransactionController::new'], [], [['text', '/transaction/new']], [], [], []],
     'app_transaction_show' => [['id'], ['_controller' => 'App\\Controller\\TransactionController::show'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/transaction']], [], [], []],
@@ -35,11 +35,11 @@ return [
     'App\Controller\CompteBancaireController::show' => [['id'], ['_controller' => 'App\\Controller\\CompteBancaireController::show'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/compte/bancaire']], [], [], []],
     'App\Controller\CompteBancaireController::edit' => [['id'], ['_controller' => 'App\\Controller\\CompteBancaireController::edit'], [], [['text', '/edit'], ['variable', '/', '[^/]++', 'id', true], ['text', '/compte/bancaire']], [], [], []],
     'App\Controller\CompteBancaireController::delete' => [['id'], ['_controller' => 'App\\Controller\\CompteBancaireController::delete'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/compte/bancaire']], [], [], []],
+    'App\Controller\RegistrationController::register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'App\Controller\TransactionController::index' => [[], ['_controller' => 'App\\Controller\\TransactionController::index'], [], [['text', '/transaction']], [], [], []],
     'App\Controller\TransactionController::new' => [[], ['_controller' => 'App\\Controller\\TransactionController::new'], [], [['text', '/transaction/new']], [], [], []],
     'App\Controller\TransactionController::show' => [['id'], ['_controller' => 'App\\Controller\\TransactionController::show'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/transaction']], [], [], []],
     'App\Controller\TransactionController::edit' => [['id'], ['_controller' => 'App\\Controller\\TransactionController::edit'], [], [['text', '/edit'], ['variable', '/', '[^/]++', 'id', true], ['text', '/transaction']], [], [], []],
     'App\Controller\TransactionController::delete' => [['id'], ['_controller' => 'App\\Controller\\TransactionController::delete'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/transaction']], [], [], []],
-
     'App\Controller\UtilisateurController::index' => [[], ['_controller' => 'App\\Controller\\UtilisateurController::index'], [], [['text', '/utilisateur']], [], [], []],
 ];
