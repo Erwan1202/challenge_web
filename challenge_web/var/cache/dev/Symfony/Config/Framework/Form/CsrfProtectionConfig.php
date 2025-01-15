@@ -15,7 +15,7 @@ class CsrfProtectionConfig
     private $fieldName;
     private $fieldAttr;
     private $_usedProperties = [];
-    
+
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -25,10 +25,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-    
+
         return $this;
     }
-    
+
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -38,10 +38,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['tokenId'] = true;
         $this->tokenId = $value;
-    
+
         return $this;
     }
-    
+
     /**
      * @default '_token'
      * @param ParamConfigurator|mixed $value
@@ -51,10 +51,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['fieldName'] = true;
         $this->fieldName = $value;
-    
+
         return $this;
     }
-    
+
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -64,10 +64,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['fieldAttr'] = true;
         $this->fieldAttr = $value;
-    
+
         return $this;
     }
-    
+
     public function __construct(array $value = [])
     {
         if (array_key_exists('enabled', $value)) {
@@ -75,30 +75,30 @@ class CsrfProtectionConfig
             $this->enabled = $value['enabled'];
             unset($value['enabled']);
         }
-    
+
         if (array_key_exists('token_id', $value)) {
             $this->_usedProperties['tokenId'] = true;
             $this->tokenId = $value['token_id'];
             unset($value['token_id']);
         }
-    
+
         if (array_key_exists('field_name', $value)) {
             $this->_usedProperties['fieldName'] = true;
             $this->fieldName = $value['field_name'];
             unset($value['field_name']);
         }
-    
+
         if (array_key_exists('field_attr', $value)) {
             $this->_usedProperties['fieldAttr'] = true;
             $this->fieldAttr = $value['field_attr'];
             unset($value['field_attr']);
         }
-    
+
         if ([] !== $value) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($value)));
         }
     }
-    
+
     public function toArray(): array
     {
         $output = [];
@@ -114,7 +114,7 @@ class CsrfProtectionConfig
         if (isset($this->_usedProperties['fieldAttr'])) {
             $output['field_attr'] = $this->fieldAttr;
         }
-    
+
         return $output;
     }
 
