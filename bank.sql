@@ -1,7 +1,5 @@
 -- Créaton de la base de données
 
-CREATE DATABASE banque;
-
 -- Utilisation de la base de données    
 
 USE banque;
