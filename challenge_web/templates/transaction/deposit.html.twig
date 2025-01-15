@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dépôt d'Argent{% endblock %}
+
+{% block body %}
+<h1>Dépôt d'Argent sur le Compte</h1>
+
+<form action="{{ path('transaction_deposit') }}" method="post">
+    <label for="montant">Montant à déposer:</label>
+    <input type="number" id="montant" name="montant" required min="0" step="any">
+
+    <button type="submit">Déposer</button>
+</form>
+{% endblock %}
