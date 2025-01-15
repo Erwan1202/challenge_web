@@ -3,7 +3,7 @@
         'name' => 'symfony/skeleton',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5cd832f008ed1eddc1d99e33fc48988192d7246c',
+        'reference' => '4e6684c10e151006b9412572c43eb949b303f4fa',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -154,12 +154,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'friendsofphp/php-cs-fixer' => array(
-            'dev_requirement' => true,
-            'replaced' => array(
-                0 => 'v3.68.0',
-            ),
-        ),
         'masterminds/html5' => array(
             'pretty_version' => '2.9.0',
             'version' => '2.9.0.0',
@@ -211,15 +205,6 @@
             'reference' => '4f7fd7836c6f332bb2933569e566a0d6c4cbed74',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phar-io/version',
-            'aliases' => array(),
-            'dev_requirement' => true,
-        ),
-        'php-cs-fixer/shim' => array(
-            'pretty_version' => 'v3.68.0',
-            'version' => '3.68.0.0',
-            'reference' => '23acc692a99304559d4c94e9f299158ecd0ed7d1',
-            'type' => 'application',
-            'install_path' => __DIR__ . '/../php-cs-fixer/shim',
             'aliases' => array(),
             'dev_requirement' => true,
         ),
@@ -418,8 +403,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache-implementation' => array(
@@ -870,9 +855,9 @@
             'dev_requirement' => false,
         ),
         'symfony/maker-bundle' => array(
-            'pretty_version' => 'v1.62.0',
-            'version' => '1.62.0.0',
-            'reference' => '0624f13b1e0ff86df6f6646c711d806d9af12629',
+            'pretty_version' => 'v1.62.1',
+            'version' => '1.62.1.0',
+            'reference' => '468ff2708200c95ebc0d85d3174b6c6711b8a590',
             'type' => 'symfony-bundle',
             'install_path' => __DIR__ . '/../symfony/maker-bundle',
             'aliases' => array(),
@@ -1160,7 +1145,7 @@
         'symfony/skeleton' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5cd832f008ed1eddc1d99e33fc48988192d7246c',
+            'reference' => '4e6684c10e151006b9412572c43eb949b303f4fa',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
