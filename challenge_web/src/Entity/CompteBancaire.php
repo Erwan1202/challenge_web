@@ -25,6 +25,9 @@ class CompteBancaire
     #[ORM\Column]
     private ?float $decouvertAutorise = null;
 
+//test
+
+
     #[ORM\ManyToOne(inversedBy: 'compteBancaires')]
     #[ORM\JoinColumn(nullable: false)]
     private ?utilisateur $utilisateur = null;
