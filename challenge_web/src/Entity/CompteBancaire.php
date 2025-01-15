@@ -24,10 +24,8 @@ class CompteBancaire
 
     #[ORM\Column]
     private ?float $decouvertAutorise = null;
-
-    #[ORM\ManyToOne(inversedBy: 'compteBancaires')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?utilisateur $utilisateur = null;
+    private ?Utilisateur $utilisateur = null;
 
     public function getId(): ?int
     {
@@ -82,12 +80,12 @@ class CompteBancaire
         return $this;
     }
 
-    public function getUtilisateur(): ?utilisateur
+    public function getUtilisateur(): ?Utilisateur
     {
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?utilisateur $utilisateur): static
+    public function setUtilisateur(?Utilisateur $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
 

@@ -20,6 +20,7 @@ Demande:
         2 types de compte : Epargne, Courant
         il est impossible d'ouvrir un compte épargne sans solde initial
         possiblité de découvert de 200 euros max
+    Fermeture de compte 
 
 3. Transactions bancaires
     Depots
@@ -33,6 +34,7 @@ Demande:
         type
         montant 
         statut
+        
 4. Gestion des administrateurs 
     Visualiser les clients
     Superviser les Transactions
@@ -71,11 +73,11 @@ Github
         Initialise un dépôt GitHub. OK
 2. Modélisation des Données
     Crée un script SQL pour le modèle conceptuel des données :
-    Tables pour les utilisateurs, comptes bancaires, transactions.
-    Relations entre les tables (clés primaires et étrangères).
+        Tables pour les utilisateurs, comptes bancaires, transactions. OK
+        Relations entre les tables (clés primaires et étrangères). OK
 3. Développement Backend (PHP + PostgreSQL)
     Structure MVC :
-        Crée les répertoires pour Models, Views, et Controllers.
+        Crée les répertoires pour Models, Views, et Controllers. OK
     Gestion des Utilisateurs :
         Implémente l'inscription et la gestion des rôles (client/admin).
     Gestion des Comptes Bancaires :
@@ -100,7 +102,7 @@ Github
         Fournit le modèle conceptuel des données en diagramme.
 7. Contrôle de Version (Git)
     Crée une branche principale (main ou master).
-    Fais des commits réguliers avec des messages clairs en anglais.
+    Fais des commits réguliers avNec des messages clairs en anglais.
     Utilise des branches pour développer des fonctionnalités spécifiques, puis fusionne dans la branche principale.
 8. Déploiement et Test
     Teste le projet sur un serveur local.

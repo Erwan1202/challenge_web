@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Compte Bancaire{% endblock %}
+
+{% block body %}
+<h1>Détails du Compte Bancaire</h1>
+
+<p>Numéro de compte: {{ compte.numeroDeCompte }}</p>
+<p>Type: {{ compte.type }}</p>
+<p>Solde: {{ compte.solde }}</p>
+<p>Propriétaire: {{ compte.utilisateur.nom }} {{ compte.utilisateur.prenom }}</p>
+
+<h2>Transactions</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Montant</th>
+            <th>Statut</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in compte.transactions %}
+            <tr>
+                <td>{{ transaction.dateHeure|date('d/m/Y H:i') }}</td>
+                <td>{{ transaction.type }}</td>
+                <td>{{ transaction.montant }}</td>
+                <td>{{ transaction.statut }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucune transaction trouvée.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('app_compte_bancaire_index') }}">Retour à la liste</a>
+{% endblock %}

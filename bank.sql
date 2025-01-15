@@ -1,7 +1,5 @@
 -- Créaton de la base de données
 
-CREATE DATABASE banque;
-
 -- Utilisation de la base de données    
 
 USE banque;
@@ -41,3 +39,8 @@ CREATE TABLE transactions (
     FOREIGN KEY (compte_source_id) REFERENCES comptes_bancaires(id),
     FOREIGN KEY (compte_dest_id) REFERENCES comptes_bancaires(id)
 );
+
+
+-- Remplissage de la table Utilisateurs
+INSERT INTO utilisateurs (nom, prenom, telephone, email, mdp_chiffre, role) VALUES
+('Doe', 'John', '0601020304', 'Doe.John@gmail.com', '123456', 'client')
