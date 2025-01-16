@@ -1,4 +1,102 @@
-<!DOCTYPE html>
+<html lang="fr-FR" dir="ltr">
+<head>
+    <title>{% block title %}Bank{% endblock %}</title>
+    <meta name="description" content="Meilleure banque">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('images/logo.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ path('app_home') }}">
+            <img src="{{ asset('images/logo.png') }}" alt="Bank Logo" class="headerLogo">
+        </a>
+        <nav>
+            {% block nav %}<a href="{{ path('app_home') }}">Accueil</a>{% endblock %}
+        </nav>
+        <div class="headerContainer">
+            <div class="headerSearch">
+                <input type="text" placeholder="Recherche...">
+                <img src="{{ asset('images/search.png') }}" alt="Search Icon">
+            </div>
+            <a href="#" class="headerAccount">
+                🧔 Compte
+            </a>
+        </div>
+    </header>
+
+    <main>
+        {% block body %}{% endblock %}
+
+        <div class="contactContainer" id="contact">
+            <div class="contactInfo">
+                <div class="contactLinks">
+                    <h2>Contactez-nous</h2>
+                    <p>📞 Téléphone : <a href="tel:0123456789">0123456789</a> </p>
+                    <p>✉️ Email : <a href="mailto:contact@bank.com">contact@bank.com</a> </p>
+                </div>
+                <div class="socialMediaLinks">
+                    <h2>Nos réseaux sociaux</h2>
+                    <div>
+                        <a href="#"><img src="{{ asset('images/facebook.png') }}" alt="Avis"></a>
+                        <a href="#"><img src="{{ asset('images/instagram.png') }}" alt="Avis"></a>
+                        <a href="#"><img src="{{ asset('images/tiktok.png') }}" alt="Avis"></a>
+                        <a href="#"><img src="{{ asset('images/twitter.png') }}" alt="Avis"></a>
+                    </div>
+                </div>
+            </div>
+            <form action="#" method="post" class="contactForm">
+                <div class="formGroup">
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+
+                <div class="formGroup">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" required>
+                </div>
+
+                <div class="formGroup">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="formGroup">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+                </div>
+
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footerLinks">
+            <div class="footerLogo">
+                <img src="{{ asset('images/logoFooter.png') }}" alt="Bank">
+                <span>Bank</span>
+            </div>
+            <div class="socialMediaLinks">
+                <h2>Nos réseaux sociaux</h2>
+                <div>
+                    <a href="#"><img src="{{ asset('images/facebook.png') }}" alt="Avis"></a>
+                    <a href="#"><img src="{{ asset('images/instagram.png') }}" alt="Avis"></a>
+                    <a href="#"><img src="{{ asset('images/tiktok.png') }}" alt="Avis"></a>
+                    <a href="#"><img src="{{ asset('images/twitter.png') }}" alt="Avis"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footerCopyright">
+            <p>&copy; Bank 2025</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+{# <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -14,4 +112,4 @@
     <body>
         {% block body %}{% endblock %}
     </body>
-</html>
+</html> #}
