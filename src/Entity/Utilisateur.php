@@ -24,15 +24,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     /**
-     * @var string Le rôle de l'utilisateur (ex. "ROLE_USER", "ROLE_ADMIN")
+     * @var string Le rôle de l'utilisateur
      */
     #[ORM\Column(length: 50)]
-    private ?string $role = 'client'; // Valeur par défaut
+    private ?string $role = 'client';
 
     /**
-     * @var string The hashed password
+     * @var string Le mot de passe haché
      */
-    #[ORM\Column]
+    #[ORM\Column(name: "mdp_chiffre", type: "text")]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
@@ -89,11 +89,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return [$this->role];
     }
 
-    /**
-     * Définit un rôle pour l'utilisateur.
-     *
-     * @param string $role
-     */
     public function setRole(string $role): static
     {
         $this->role = $role;
@@ -126,8 +121,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Si vous stockez des données temporaires sensibles, nettoyez-les ici
     }
 
     public function getNom(): ?string
@@ -175,7 +169,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCompteBancaire(CompteBancaire $compteBancaire): static
     {
         if ($this->compteBancaire->removeElement($compteBancaire)) {
-            // set the owning side to null (unless already changed)
+            // Set the owning side to null (unless already changed)
             if ($compteBancaire->getUtilisateur() === $this) {
                 $compteBancaire->setUtilisateur(null);
             }
