@@ -1,0 +1,38 @@
+<html lang="fr-FR" dir="ltr">
+<head>
+    <title>{% block title %}Tableau de bord{% endblock %}</title>
+    <meta name="description" content="Tableau de bord">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('images/logo.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard_style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ path('app_home') }}"  class="headerLogo">
+            <img src="{{ asset('images/logoClair.png') }}" alt="Bank Logo">
+            Bank
+        </a>
+        <nav>
+            {% block nav %}{% endblock %}
+        </nav>
+        {% block usersList %}{% endblock %}
+        <a href="" class="headerAccount">
+            <img src="{{ asset('images/utilisateurClair.png') }}" alt="Profil">
+            {# <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p> #}
+            {# <p>{{ utilisateur.email }}</p> #}
+            <div>
+                <p>Nom Prénom</p>
+                <p>Email</p>
+            </div>
+        </a>
+
+    </header>
+
+    <main>
+        <h1>{% block dashboard_title %}Tableau de bord{% endblock %}</h1>
+        {% block dashboard_content %}{% endblock %}
+    </main>
+
+</body>
+</html>

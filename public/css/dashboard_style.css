@@ -1,0 +1,128 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --background-color1: #FFFFE6;
+    --background-color2: rgba(255, 255, 255, 0.75);
+    --text-color: black;
+    --header-background: rgb(20, 20, 20);
+    --footer-background: black;
+    --footer-background2: #323232;
+    --button-bg: black;
+    --button-border-radius: 10px;
+    --button-text-color: #fff;
+    --border-color1: #ebebeb;
+    --border-color2: rgba(235, 235, 235, 0.75);
+    --accent-color1: #009efe;
+    --accent-color2: #29f598;
+    --accent-color3: #FFDE50;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color1);
+    color: var(--text-color);
+    transition: background-color 0.25s, color 0.25s;
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--button-bg);
+    color: var(--button-text-color);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--button-border-radius);
+}
+button:hover {
+    background-color: var(--accent-color1);
+    transition: 0.25s;
+}
+button:active {
+    background-color: var(--accent-color2);
+    transform: scale(0.95);
+    transition: 0.25s;
+}
+
+
+
+/* CSS pour le header •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+header {
+    position: sticky;
+    top: 0px;
+    width: 20vw;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    margin: 0;
+    align-items: center;
+    padding: 25px;
+    background-color: var(--header-background);
+    border-radius: 0px 25px 25px 0px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 50;
+    transition: 0.25s;
+}
+
+.headerLogo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 25px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+}
+.headerLogo img {
+    width: 50px;
+    height: auto;
+}
+.headerLogo img:active {
+    transform: scale(0.95);
+    transition: 0.25s;
+}
+
+.headerAccount {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+    gap: 25px;
+    border: 1px solid var(--accent-color3);
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+}
+.headerAccount img {
+    width: 25px;
+    height: 25px;
+}
+.headerAccount div {
+    display: flex;
+    flex-direction: column;
+}
+.headerAccount div p {
+    margin: 0;
+}
+
+
+
+/* CSS pour le main •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+main {
+    padding: 50px;
+    width: calc(80vw - 100px);
+}
