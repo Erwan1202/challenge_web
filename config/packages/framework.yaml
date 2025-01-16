@@ -10,6 +10,14 @@ framework:
 
 when@test:
     framework:
+        secret : '%env(APP_SECRET)%'
+        csrf_protection: true # Active la protection CSRF ici
+
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
+            enabled: true
+            cookie_secure: auto
+            cookie_httponly: true
+            cookie_samesite: lax
+            save_path: '%kernel.cache_dir%/sessions'

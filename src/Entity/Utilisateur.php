@@ -24,15 +24,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     /**
-     * @var list<string> The user roles
+     * @var string Le rôle de l'utilisateur
      */
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(length: 50)]
+    private ?string $role = 'client';
 
     /**
-     * @var string The hashed password
+     * @var string Le mot de passe haché
      */
-    #[ORM\Column]
+    #[ORM\Column(name: "mdp_chiffre", type: "text")]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
@@ -82,25 +82,23 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      *
-     * @return list<string>
+     * @return array<string> Un tableau contenant le rôle
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'client';
-
-        return array_unique($roles);
+        return [$this->role];
     }
 
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
+    public function setRole(string $role): static
     {
-        $this->roles = $roles;
+        $this->role = $role;
 
         return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
     }
 
     /**
@@ -123,8 +121,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Si vous stockez des données temporaires sensibles, nettoyez-les ici
     }
 
     public function getNom(): ?string
@@ -172,7 +169,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCompteBancaire(CompteBancaire $compteBancaire): static
     {
         if ($this->compteBancaire->removeElement($compteBancaire)) {
-            // set the owning side to null (unless already changed)
+            // Set the owning side to null (unless already changed)
             if ($compteBancaire->getUtilisateur() === $this) {
                 $compteBancaire->setUtilisateur(null);
             }
