@@ -6,7 +6,7 @@ use App\Repository\CompteBancaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CompteBancaireRepository::class)]
-class CompteBancaire
+class CompteBancaireForm
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
