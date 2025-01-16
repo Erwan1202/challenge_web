@@ -15,16 +15,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class TransactionController extends AbstractController
-{
-    #[Route('/transaction', name: 'app_transaction')]
+    {
+        #[Route('/transaction/transfer', name: 'app_transaction')]
     public function index(TransactionRepository $repository): Response
     {
         $transactions = $repository->findAll();
 
-        return $this->render('transaction/index.html.twig', [
+        return $this->render('transaction/transfer.html.twig', [
             'transactions' => $transactions,
         ]);
     }
+
 
     #[Route('/transaction/new', name: 'app_transaction_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
