@@ -2,10 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\CompteBancaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CompteBancaireRepository::class)]
+#[ORM\Entity]
 class CompteBancaire
 {
     #[ORM\Id]
@@ -24,6 +23,8 @@ class CompteBancaire
 
     #[ORM\Column]
     private ?float $decouvertAutorise = null;
+
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'comptes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
@@ -37,10 +38,9 @@ class CompteBancaire
         return $this->numero_de_compte;
     }
 
-    public function setNumeroDeCompte(int $numero_de_compte): static
+    public function setNumeroDeCompte(int $numero_de_compte): self
     {
         $this->numero_de_compte = $numero_de_compte;
-
         return $this;
     }
 
@@ -49,10 +49,9 @@ class CompteBancaire
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(string $type): self
     {
         $this->type = $type;
-
         return $this;
     }
 
@@ -61,10 +60,9 @@ class CompteBancaire
         return $this->solde;
     }
 
-    public function setSolde(float $solde): static
+    public function setSolde(float $solde): self
     {
         $this->solde = $solde;
-
         return $this;
     }
 
@@ -73,10 +71,9 @@ class CompteBancaire
         return $this->decouvertAutorise;
     }
 
-    public function setDecouvertAutorise(float $decouvertAutorise): static
+    public function setDecouvertAutorise(float $decouvertAutorise): self
     {
         $this->decouvertAutorise = $decouvertAutorise;
-
         return $this;
     }
 
@@ -85,10 +82,9 @@ class CompteBancaire
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?Utilisateur $utilisateur): static
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
-
         return $this;
     }
 }
