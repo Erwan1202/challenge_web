@@ -20,8 +20,7 @@
     <label for="inputPassword">Password</label>
     <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <div class="checkbox mb-3">
         <label>
@@ -33,4 +32,11 @@
         Sign in
     </button>
 </form>
+
+<!-- Nouveau bloc : lien vers la page d'inscription -->
+<div class="mt-3">
+    <p>Pas encore client ? 
+        <a href="{{ path('app_register') }}" class="btn btn-link">Inscrivez-vous</a>
+    </p>
+</div>
 {% endblock %}
