@@ -156,3 +156,36 @@ main {
     min-height: 95vh;
     margin-bottom: 100px;
 }
+
+
+
+/* CSS pour la page d'accueil •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.heroContainer {
+    display: flex;
+    align-items: center;
+    height: 75vh;
+    gap: 50px;
+}
+
+.heroContainer div {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+.heroContainer div h1 {
+    font-size: 75px;
+}
+.heroContainer div p {
+    font-size: 20px;
+    font-weight: 300;
+}
+.heroContainer div a {
+    text-decoration: none;
+}
+
+.heroContainer img { 
+    flex: 1;
+}
