@@ -2,6 +2,13 @@
 
 {% block title %}Accueil{% endblock %}
 
+{% block nav %}
+    <a href="{{ path('app_home') }}">Accueil</a>
+    <a href="#advantages">Avantages</a>
+    <a href="#review">Avis</a>
+    <a href="#contact">Contact</a>
+{% endblock %}
+
 {% block body %}
     <div class="heroContainer">
         <div>
@@ -14,7 +21,7 @@
         </div>
     </div>
     
-    <div class="advantagesListContainer">
+    <div class="advantagesListContainer" id="advantages">
         <h1>Nos avantages</h1>
         <div class="advantagesList">
             <div class="advantagesItem">
@@ -37,7 +44,7 @@
         </div>
     </div>
 
-    <div class="reviewListContainer">
+    <div class="reviewListContainer" id="review">
         <h1>Les avis de nos clients</h1>
         <div class="reviewList">
             <div class="reviewItem">

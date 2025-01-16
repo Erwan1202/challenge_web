@@ -13,7 +13,7 @@
             <img src="{{ asset('images/logo.png') }}" alt="Bank Logo" class="headerLogo">
         </a>
         <nav>
-            <a href="{{ path('app_home') }}">Accueil</a>
+            {% block nav %}<a href="{{ path('app_home') }}">Accueil</a>{% endblock %}
         </nav>
         <div class="headerContainer">
             <div class="headerSearch">
@@ -29,7 +29,7 @@
     <main>
         {% block body %}{% endblock %}
 
-        <div class="contactContainer">
+        <div class="contactContainer" id="contact">
             <div class="contactInfo">
                 <div class="contactLinks">
                     <h2>Contactez-nous</h2>
@@ -73,11 +73,24 @@
     </main>
 
     <footer>
-        <div class="footerLogo">
-            <img src="{{ asset('images/logo.png') }}" alt="Bank">
-            <span>Bank</span>
+        <div class="footerLinks">
+            <div class="footerLogo">
+                <img src="{{ asset('images/logoFooter.png') }}" alt="Bank">
+                <span>Bank</span>
+            </div>
+            <div class="socialMediaLinks">
+                <h2>Nos réseaux sociaux</h2>
+                <div>
+                    <a href="#"><img src="{{ asset('images/facebook.png') }}" alt="Avis"></a>
+                    <a href="#"><img src="{{ asset('images/instagram.png') }}" alt="Avis"></a>
+                    <a href="#"><img src="{{ asset('images/tiktok.png') }}" alt="Avis"></a>
+                    <a href="#"><img src="{{ asset('images/twitter.png') }}" alt="Avis"></a>
+                </div>
+            </div>
         </div>
-        <p>&copy; Bank 2025</p>
+        <div class="footerCopyright">
+            <p>&copy; Bank 2025</p>
+        </div>
     </footer>
 </body>
 </html>
