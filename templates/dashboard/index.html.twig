@@ -1,40 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tableau de bord{% endblock %}
-
 {% block body %}
-<div class="dashboard-container">
     <h1>Tableau de bord</h1>
+    <div>
+        <h2>Bienvenue {{ app.user.nom }} {{ app.user.prenom }}</h2>
 
-    <h2>Bienvenue {{ user.nom }} {{ user.prenom }}</h2>
+        <h3>Mes comptes</h3>
+        <div>
+            {% for compte in comptes %}
+                <div class="compte-card">
+                    <p>Numéro de compte : {{ compte.numeroDeCompte }}</p>
+                    <p>Type : {{ compte.type }}</p>
+                    <p>Solde : {{ compte.solde }} €</p>
+                </div>
+            {% endfor %}
+            <a href="{{ path('app_add_compte') }}" class="btn">+ Ajouter un compte</a>
+        </div>
 
-    <!-- Section Mes Comptes -->
-    <h3>Mes comptes</h3>
-    <div class="comptes-container">
-        {% for compte in comptes %}
-            <div class="compte-card">
-                <p>Numéro: {{ compte.numeroDeCompte }}</p>
-                <p>Type: {{ compte.type }}</p>
-                <p>Solde: {{ compte.solde }} €</p>
-            </div>
-        {% else %}
-            <p>Vous n'avez aucun compte bancaire.</p>
-        {% endfor %}
+        <h3>Transactions</h3>
+        <div class="transaction-actions">
+            <a href="{{ path('app_deposit') }}" class="btn">Dépôt</a>
+            <a href="{{ path('app_withdraw') }}" class="btn">Retrait</a>
+            <a href="{{ path('app_transfer') }}" class="btn">Virement</a>
+        </div>
+
+        <h3>Historique des transactions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Montant</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.date|date('d/m/Y H:i') }}</td>
+                        <td>{{ transaction.type }}</td>
+                        <td>{{ transaction.montant }} €</td>
+                        <td>{{ transaction.statut }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-
-    <!-- Section Transactions -->
-    <h3>Transactions</h3>
-    <div class="transactions-container">
-        {% for transaction in transactions %}
-            <div class="transaction-card">
-                <p>Date: {{ transaction.dateHeure|date('d/m/Y H:i') }}</p>
-                <p>Type: {{ transaction.type }}</p>
-                <p>Montant: {{ transaction.montant }} €</p>
-                <p>Statut: {{ transaction.statut }}</p>
-            </div>
-        {% else %}
-            <p>Aucune transaction récente.</p>
-        {% endfor %}
-    </div>
-</div>
 {% endblock %}
