@@ -94,6 +94,13 @@ header {
     transition: 0.25s;
 }
 
+nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
 .headerAccount {
     display: flex;
     align-items: center;
@@ -101,6 +108,7 @@ header {
     padding: 10px 20px 10px 20px;
     gap: 25px;
     border: 1px solid var(--accent-color3);
+    background-color: rgb(25, 25, 25);
     border-radius: 20px;
     color: white;
     text-decoration: none;
@@ -117,6 +125,9 @@ header {
 .headerAccount div p {
     margin: 0;
 }
+.headerAccount div p:nth-child(1) {
+    font-weight: 500;
+}
 
 
 
@@ -125,4 +136,33 @@ header {
 main {
     padding: 50px;
     width: calc(80vw - 100px);
+}
+
+main h1 {
+    margin: 0;
+}
+
+
+.headerLinks {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 40px);
+    padding: 10px 20px 10px 20px;
+    gap: 25px;
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+}
+.headerLinks img {
+    width: 25px;
+    height: 25px;
+}
+.headerLinks div {
+    display: flex;
+    flex-direction: column;
+}
+.headerLinks div p {
+    margin: 0;
 }
