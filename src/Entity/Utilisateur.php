@@ -24,10 +24,10 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     /**
-     * @var list<string> The user roles
+     * @var string Le rôle de l'utilisateur (ex. "ROLE_USER", "ROLE_ADMIN")
      */
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(length: 50)]
+    private ?string $role = 'client'; // Valeur par défaut
 
     /**
      * @var string The hashed password
@@ -82,25 +82,28 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      *
-     * @return list<string>
+     * @return array<string> Un tableau contenant le rôle
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'client';
-
-        return array_unique($roles);
+        return [$this->role];
     }
 
     /**
-     * @param list<string> $roles
+     * Définit un rôle pour l'utilisateur.
+     *
+     * @param string $role
      */
-    public function setRoles(array $roles): static
+    public function setRole(string $role): static
     {
-        $this->roles = $roles;
+        $this->role = $role;
 
         return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
     }
 
     /**
