@@ -5,11 +5,36 @@
 {% block body %}
     <div class="heroContainer">
         <div>
-            <h1>Gérez Votre Argent en Toute Confiance</h1>
+            <h1>Gérez votre argent en toute confiance</h1>
             <p>Simplifiez votre vie financière avec notre application bancaire sécurisée et intuitive. Inscrivez-vous dès aujourd'hui et prenez le contrôle de vos comptes en toute simplicité.</p>
             <a href="{{ path('app_register') }}">Démarrer maintenant</a>
         </div>
-        <img src="{{ asset('images/piece.png') }}">
+        <div>
+            <img src="{{ asset('images/piece.png') }}">
+        </div>
+    </div>
+    
+    <div class="advantagesListContainer">
+        <h1>Nos avantages</h1>
+        <div class="advantagesList">
+            <div class="advantagesItem">
+                <div><img src="{{ asset('images/banque.png') }}" alt="Compte bancaire"></div>
+                <h2>Gestion complète des comptes bancaires</h2>
+                <p>Créez des comptes épargne et courants. Gérez jusqu'à 5 comptes par utilisateur. Possibilité de découvert jusqu'à 200€</p>
+            </div>
+
+            <div class="advantagesItem">
+                <div><img src="{{ asset('images/securite.png') }}" alt="Sécurité"></div>
+                <h2>Transactions bancaires sécurisées</h2>
+                <p>Effectuez des dépôts, retraits, et virements. Historique détaillé des transactions.</p>
+            </div>
+
+            <div class="advantagesItem">
+                <div><img src="{{ asset('images/utilisateur.png') }}" alt="Support utillisateur"></div>
+                <h2>Sécurité avancée et support utilisateurs</h2>
+                <p>Chiffrement des mots de passe. Validation des données utilisateurs. Support client disponible 24/7</p>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
