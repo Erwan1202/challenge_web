@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter un compte bancaire</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn">Ajouter le compte</button>
+    {{ form_end(form) }}
+{% endblock %}

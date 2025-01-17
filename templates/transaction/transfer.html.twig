@@ -1,28 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Virement Bancaire{% endblock %}
+{% block title %}Transactions{% endblock %}
 
 {% block body %}
-<h1>Effectuer un Virement</h1>
-
-<form action="{{ path('transaction_transfer') }}" method="post">
-    <label for="compte_source">Compte Source:</label>
-    <select name="compte_source" id="compte_source">
-        {% for compte in comptes %}
-            <option value="{{ compte.id }}">{{ compte.numero }}</option>
-        {% endfor %}
-    </select>
-
-    <label for="compte_dest">Compte Destinataire:</label>
-    <select name="compte_dest" id="compte_dest">
-        {% for compte in comptes %}
-            <option value="{{ compte.id }}">{{ compte.numero }}</option>
-        {% endfor %}
-    </select>
-
-    <label for="montant">Montant à transférer:</label>
-    <input type="number" id="montant" name="montant" required min="0" step="any">
-
-    <button type="submit">Effectuer le Virement</button>
+<h1>Liste des transactions</h1>
+<ul>
+    {% for transaction in transactions %}
+        <li>
+            <a href="{{ path('app_transaction_show', { id: transaction.id }) }}">
+                {{ transaction.label }} - {{ transaction.amount }}€
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{{ path('app_transaction_new') }}">Créer une nouvelle transaction</a>
+<form action="{{ path('app_transaction') }}" method="post">
+    <!-- Form content here -->
 </form>
 {% endblock %}
