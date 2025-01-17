@@ -12,27 +12,30 @@ class LoginController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        // Si l'utilisateur est déjà authentifié, rediriger en fonction de son rôle
         if ($this->getUser()) {
             $roles = $this->getUser()->getRoles();
-        }
-        // Si l'utilisateur est déjà authentifié, redirigez-le en fonction de son rôle
-        if (in_array('ROLE_ADMIN', $roles, TRUE)) {
-            return $this->redirectToRoute('admin_dashboard'); // Redirection vers le tableau de bord de l'admin
-        }else{
-            return $this->redirectToRoute('user_dashboard'); // Redirection vers le tableau de bord de l'utilisateur
+            if (in_array('ROLE_ADMIN', $roles, true)) {
+                return $this->redirectToRoute('admin_dashboard'); // Rediriger vers le tableau de bord admin
+            } else {
+                return $this->redirectToRoute('app_utilisateur'); // Rediriger vers le tableau de bord utilisateur
+            }
         }
 
-        // obtenir l'erreur de connexion s'il y en a une
+        // Si l'utilisateur n'est pas authentifié, afficher le formulaire de login
         $error = $authenticationUtils->getLastAuthenticationError();
-        // dernier nom d'utilisateur saisi par l'utilisateur
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
+        // La méthode peut être vide car elle est gérée automatiquement par Symfony
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
