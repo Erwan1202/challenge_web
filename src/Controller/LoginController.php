@@ -10,11 +10,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
+    private $roles = [];
+
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // Si l'utilisateur est déjà authentifié, rediriger en fonction de son rôle
         if ($this->getUser()) {
-            $roles = $this->getUser()->getRoles();
+            $roles[] = $this->getUser()->getRoles();
             if (in_array('ROLE_ADMIN', $roles, true)) {
                 return $this->redirectToRoute('admin_dashboard'); // Rediriger vers le tableau de bord admin
             } else {
