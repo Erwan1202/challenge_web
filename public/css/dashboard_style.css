@@ -228,10 +228,23 @@ main h1 {
 .accountsItem h3, .accountsItem p {
     margin: 0;
 }
-.accountsItem div p {
+.accountsItem > div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+.accountsItem > div:nth-child(1) > div > p {
     font-weight: 300;
 }
-.accountBalance {
+.accountsItem > div:nth-child(1) > a {
+    text-decoration: none;
+}
+.accountsItem > div:nth-child(1) > a > img {
+    width: 25px;
+    height: auto;
+}
+.accountsItem > p {
     font-size: 30px;
 }
 
@@ -295,6 +308,7 @@ main h1 {
     background-color: rgb(255, 255, 250);
     padding: 10px 20px 10px 20px;
     border-radius: 20px;
+    align-items: center;
 }
 
 .transactionsHistoryItem div {
@@ -307,6 +321,13 @@ main h1 {
 }
 .transactionsHistoryItem p {
     font-weight: 500;
+}
+.transactionsHistoryItem > a {
+    text-decoration: none;
+}
+.transactionsHistoryItem > a > img {
+    width: 25px;
+    height: auto;
 }
 
 

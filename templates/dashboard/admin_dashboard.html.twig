@@ -44,10 +44,13 @@
             {# ajouter un foreach ici #}
             <div class="accountsItem">
                 <div>
-                    <h3>0123456789</h3> {# ajouter informations dynamiques #}
-                    <p>Type de compte</p>
+                    <div>
+                        <h3>0123456789</h3> {# ajouter informations dynamiques #}
+                        <p>Type de compte</p>
+                    </div>
+                    <a href=""><img src="{{ asset('images/cadena.png') }}" alt="Bloquer"></a>
                 </div>
-                <p class="accountBalance">1000 €</p>
+                <p>1000 €</p> 
             </div>
 
             <a href="" class="accountsItemAdd">
@@ -86,6 +89,7 @@
                         <p>Statut</p>
                     </div>
                     <p>1000 €</p>
+                    <a href=""><img src="{{ asset('images/croix.png') }}" alt="Annuler la transaction"></a>
                 </div>
             </div>
         </div>
