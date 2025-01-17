@@ -3,18 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Email;
 
 class RegistrationController extends AbstractController
 {
@@ -26,40 +21,8 @@ class RegistrationController extends AbstractController
     ): Response {
         $user = new Utilisateur();
 
-        // Crée le formulaire
-        $form = $this->createFormBuilder($user)
-            ->add('nom', TextType::class, [
-                'label' => 'Nom',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(['message' => 'Le nom est obligatoire.']),
-                ],
-            ])
-            ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(['message' => 'Le prénom est obligatoire.']),
-                ],
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Email',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(['message' => 'L\'email est obligatoire.']),
-                    new Email(['message' => 'Veuillez saisir un email valide.']),
-                ],
-            ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmez le mot de passe'],
-                'mapped' => false, // Ce champ n'est pas directement mappé à l'entité
-                'constraints' => [
-                    new NotBlank(['message' => 'Le mot de passe est obligatoire.']),
-                ],
-            ])
-            ->getForm();
+        // Utilise le formulaire défini dans RegistrationFormType
+        $form = $this->createForm(RegistrationFormType::class, $user);
 
         // Gère la soumission du formulaire
         $form->handleRequest($request);
@@ -72,9 +35,8 @@ class RegistrationController extends AbstractController
             if ($existingUser) {
                 $form->get('email')->addError(new \Symfony\Component\Form\FormError('Cette adresse email est déjà utilisée.'));
             } else {
-                $plainPassword = $form->get('plainPassword')->getData();
-
                 // Encode le mot de passe
+                $plainPassword = $form->get('plainPassword')->getData();
                 $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
                 // Ajoute le rôle par défaut
@@ -84,8 +46,10 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
+                // Ajoute un message flash
                 $this->addFlash('success', 'Inscription réussie !');
 
+                // Redirige vers la page d'accueil
                 return $this->redirectToRoute('app_home');
             }
         }
