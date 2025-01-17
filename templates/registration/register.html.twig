@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
-
 {% block body %}
     <h1>Inscription</h1>
 
-    {{ form_start(registrationForm, { 'attr': { 'data-turbo': 'false' } }) }}
+    {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.nom) }}
         {{ form_row(registrationForm.prenom) }}
         {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-
-        {{ form_rest(registrationForm) }}
-
-        <button type="submit" class="btn">S'inscrire</button>
+        {{ form_row(registrationForm.plainPassword.first) }}
+        {{ form_row(registrationForm.plainPassword.second) }}
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
     {{ form_end(registrationForm) }}
+
+    <div style="margin-top: 20px;">
+        <p>Déjà client chez nous ? 
+            <a href="{{ path('app_login') }}">Connectez-vous</a>
+        </p>
+    </div>
 {% endblock %}

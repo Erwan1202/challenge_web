@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Transaction{% endblock %}
+
+{% block body %}
+    <h1>Nouvelle Transaction</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.montant) }}
+        {{ form_row(form.compte_source) }}
+        {{ form_row(form.compte_destination) }}
+
+        <button class="btn btn-primary">Valider</button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -30,13 +30,13 @@ class TransactionType extends AbstractType
             ])
             ->add('compte_source', EntityType::class, [
                 'class' => CompteBancaire::class,
-                'choice_label' => 'numero',
+                'choice_label' => 'numeroDeCompte', // Utilise la propriété correcte
                 'label' => 'Compte source',
                 'required' => false, // Pas nécessaire pour les dépôts
             ])
             ->add('compte_destination', EntityType::class, [
                 'class' => CompteBancaire::class,
-                'choice_label' => 'numero',
+                'choice_label' => 'numeroDeCompte', // Utilise la propriété correcte
                 'label' => 'Compte destination',
                 'required' => false, // Pas nécessaire pour les retraits
             ]);

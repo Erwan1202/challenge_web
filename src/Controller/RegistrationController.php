@@ -3,13 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
-use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
 
 class RegistrationController extends AbstractController
 {
@@ -20,27 +25,72 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         $user = new Utilisateur();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        // Crée le formulaire
+        $form = $this->createFormBuilder($user)
+            ->add('nom', TextType::class, [
+                'label' => 'Nom',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(['message' => 'Le nom est obligatoire.']),
+                ],
+            ])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(['message' => 'Le prénom est obligatoire.']),
+                ],
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(['message' => 'L\'email est obligatoire.']),
+                    new Email(['message' => 'Veuillez saisir un email valide.']),
+                ],
+            ])
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmez le mot de passe'],
+                'mapped' => false, // Ce champ n'est pas directement mappé à l'entité
+                'constraints' => [
+                    new NotBlank(['message' => 'Le mot de passe est obligatoire.']),
+                ],
+            ])
+            ->getForm();
+
+        // Gère la soumission du formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération des données
-            $plainPassword = $form->get('plainPassword')->getData();
+            $email = $form->get('email')->getData();
 
-            // Encode le mot de passe
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            // Vérifie si l'email existe déjà
+            $existingUser = $entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $email]);
+            if ($existingUser) {
+                $form->get('email')->addError(new \Symfony\Component\Form\FormError('Cette adresse email est déjà utilisée.'));
+            } else {
+                $plainPassword = $form->get('plainPassword')->getData();
 
-            // Ajout du rôle par défaut (client)
-            $user->setRole('client');
+                // Encode le mot de passe
+                $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
-            // Sauvegarde dans la base de données
-            $entityManager->persist($user);
-            $entityManager->flush();
+                // Ajoute le rôle par défaut
+                $user->setRoles(['ROLE_CLIENT']);
 
-            // Redirection après l'inscription
-            return $this->redirectToRoute('app_utilisateur');
+                // Sauvegarde dans la base de données
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Inscription réussie !');
+
+                return $this->redirectToRoute('app_home');
+            }
         }
 
+        // Affiche le formulaire dans la vue
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
