@@ -4,26 +4,40 @@
 
 {% block nav %}
     <nav class="adminNav">
-        <a href="" class="headerAdminLinks">
+        <a href="#" class="headerAdminLinks">
             <img src="{{ asset('images/accueilClair.png') }}" alt="Tableau de bord">
         </a>
-        <a href="" class="headerAdminLinks">
+        <a href="#accounts" class="headerAdminLinks">
             <img src="{{ asset('images/carteClair.png') }}" alt="Comptes">
         </a>
-        <a href="" class="headerAdminLinks">
+        <a href="#transactions" class="headerAdminLinks">
             <img src="{{ asset('images/transactionClair.png') }}" alt="Transactions">
         </a>
     </nav>
 {% endblock %}
 
 {% block usersList %}
-    
+
+    {# ajouter un foreach ici #}
+    <div class="userAccountsList">
+        <a href="" class="userAccountsItem">
+            <div>
+                <p>Nom</p> {# ajouter informations dynamiques #}
+                <p>Prénom</p>
+            </div>
+            <div>
+                <p>Email</p>
+                <p>0123456789</p>
+            </div>
+        </a>
+
+    </div>
 {% endblock %}
 
 {% block dashboard_title %}Tableau de bord Admin{% endblock %}
 
 {% block dashboard_content %}
-    <div class="accountsListContainer">
+    <div class="accountsListContainer" id="accounts">
         <h2>Mes comptes</h2>    
         <div class="accountsList">
 
@@ -43,7 +57,7 @@
         </div>
     </div>
 
-    <div class="transactionsContainer">
+    <div class="transactionsContainer" id="transactions">
         <div class="transactionsActions">
             <h2>Transactions</h2>
             <div class="transactionsActionsList">

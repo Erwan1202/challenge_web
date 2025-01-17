@@ -4,15 +4,15 @@
 
 {% block nav %}
     <nav class="userNav">
-        <a href="" class="headerLinks">
+        <a href="#" class="headerLinks">
             <img src="{{ asset('images/accueilClair.png') }}" alt="Tableau de bord">
             <p>Tableau de bord</p>
         </a>
-        <a href="" class="headerLinks">
+        <a href="#accounts" class="headerLinks">
             <img src="{{ asset('images/carteClair.png') }}" alt="Comptes">
             <p>Comptes</p>
         </a>
-        <a href="" class="headerLinks">
+        <a href="#transactions" class="headerLinks">
             <img src="{{ asset('images/transactionClair.png') }}" alt="Transactions">
             <p>Transactions</p>
         </a>
@@ -22,7 +22,7 @@
 {% block dashboard_title %}Tableau de bord Utilisateur{% endblock %}
 
 {% block dashboard_content %}
-    <div class="accountsListContainer">
+    <div class="accountsListContainer" id="accounts">
         <h2>Mes comptes</h2>    
         <div class="accountsList">
 
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div class="transactionsContainer">
+    <div class="transactionsContainer" id="transactions">
         <div class="transactionsActions">
             <h2>Transactions</h2>
             <div class="transactionsActionsList">

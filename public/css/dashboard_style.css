@@ -109,12 +109,16 @@ header {
     text-decoration: none;
     font-weight: 300;
     transition: 0.25s;
+    overflow-x: auto;
 }
 .headerAccount:hover {
     filter: brightness(1.25);
 }
 .headerAccount:active {
     transform: scale(0.95);
+}
+.headerAccount::-webkit-scrollbar {
+    display: none;
 }
 
 .headerAccount img {
@@ -344,4 +348,57 @@ main h1 {
 .headerAdminLinks img {
     width: 25px;
     height: 25px;
+}
+
+.userAccountsList {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    height: 50%;
+    max-height: 50%;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.userAccountsList::-webkit-scrollbar {
+    display: none;
+}
+
+.userAccountsItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 40px);
+    min-height: 50px;
+    background-color: rgb(50, 50, 50);
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    text-decoration: none;
+    transition: 0.25s;
+    overflow-x: auto;
+}
+.userAccountsItem:hover {
+    filter: brightness(1.25);
+}
+.userAccountsItem:active {
+    transform: scale(0.95);
+}
+.userAccountsItem::-webkit-scrollbar {
+    display: none;
+}
+
+.userAccountsItem div {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+.userAccountsItem div:nth-child(1) {
+    font-weight: 500;
+}
+.userAccountsItem div:nth-child(2) {
+    font-weight: 300;
+}
+
+.userAccountsItem div p {
+    margin: 0;
 }
