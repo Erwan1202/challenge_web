@@ -13,10 +13,11 @@
             <img src="{{ asset('images/logoClair.png') }}" alt="Bank Logo">
             Bank
         </a>
-        <nav>
-            {% block nav %}{% endblock %}
-        </nav>
+        
+        {% block nav %}{% endblock %}
+
         {% block usersList %}{% endblock %}
+
         <a href="" class="headerAccount">
             <img src="{{ asset('images/utilisateurClair.png') }}" alt="Profil">
             {# <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p> #}

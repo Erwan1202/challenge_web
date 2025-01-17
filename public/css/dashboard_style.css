@@ -95,13 +95,6 @@ header {
     transition: 0.25s;
 }
 
-nav {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 20px;
-}
-
 
 .headerAccount {
     display: flex;
@@ -159,6 +152,13 @@ main h1 {
 
 /* CSS pour le user_dashboard •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
 
+.userNav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
 .headerLinks, .transactionsActionsLinks {
     display: flex;
     align-items: center;
@@ -208,12 +208,13 @@ main h1 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-around;
     padding: 20px;
     min-width: 250px;
     text-align: center;
     background-color: var(--accent-color3);
     border-radius: 20px;
-    gap: 25px;
+    gap: 20px;
     transition: 0.25s;
 }
 .accountsItem:hover {
@@ -302,4 +303,45 @@ main h1 {
 }
 .transactionsHistoryItem p {
     font-weight: 500;
+}
+
+
+
+/* CSS pour le admin_dashboard •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.adminNav {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    flex-direction: row;
+    overflow-x: auto;
+}
+.adminNav::-webkit-scrollbar {
+    display: none;
+}
+
+.headerAdminLinks {
+    display: flex;
+    width: calc(100% - 40px);
+    padding: 20px 20px 20px 20px;
+    gap: 25px;
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+    transition: 0.25s;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerAdminLinks:hover {
+    filter: brightness(1.25);
+}
+.headerAdminLinks:active {
+    transform: scale(0.95);
+}
+.headerAdminLinks img {
+    width: 25px;
+    height: 25px;
 }

@@ -1,25 +1,26 @@
 {% extends 'dashboard/base_dashboard.html.twig' %}
 
-{% block title %}Tableau de bord Utilisateur{% endblock %}
+{% block title %}Tableau de bord Admin{% endblock %}
 
 {% block nav %}
-    <nav class="userNav">
-        <a href="" class="headerLinks">
+    <nav class="adminNav">
+        <a href="" class="headerAdminLinks">
             <img src="{{ asset('images/accueilClair.png') }}" alt="Tableau de bord">
-            <p>Tableau de bord</p>
         </a>
-        <a href="" class="headerLinks">
+        <a href="" class="headerAdminLinks">
             <img src="{{ asset('images/carteClair.png') }}" alt="Comptes">
-            <p>Comptes</p>
         </a>
-        <a href="" class="headerLinks">
+        <a href="" class="headerAdminLinks">
             <img src="{{ asset('images/transactionClair.png') }}" alt="Transactions">
-            <p>Transactions</p>
         </a>
     </nav>
 {% endblock %}
 
-{% block dashboard_title %}Tableau de bord Utilisateur{% endblock %}
+{% block usersList %}
+    
+{% endblock %}
+
+{% block dashboard_title %}Tableau de bord Admin{% endblock %}
 
 {% block dashboard_content %}
     <div class="accountsListContainer">
