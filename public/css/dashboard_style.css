@@ -74,6 +74,7 @@ header {
     transition: 0.25s;
 }
 
+
 .headerLogo {
     display: flex;
     flex-direction: row;
@@ -100,6 +101,7 @@ nav {
     width: 100%;
     gap: 20px;
 }
+
 
 .headerAccount {
     display: flex;
@@ -189,6 +191,7 @@ main h1 {
     margin: 0;
 }
 
+
 .accountsList {
     width: 100%;
     display: flex;
@@ -243,13 +246,19 @@ main h1 {
     transform: scale(0.95);
 }
 
-.transactionsActions {
+
+.transactionsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.transactionsActions, .transactionsHistory {
     width: 25%;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-.transactionsActions h2 {
+.transactionsActions h2, .transactionsHistory h2 {
     margin: 0;
 }
 
@@ -258,4 +267,39 @@ main h1 {
     flex-direction: column;
     width: 100%;
     gap: 10px;
+}
+.transactionsHistory {
+    width: 70%;
+}
+
+.transactionsHistoryList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 275px;
+    overflow-y: auto;
+    scrollbar-width: none; 
+}
+.transactionsHistoryList::-webkit-scrollbar {
+    display: none;
+}
+
+.transactionsHistoryItem {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(255, 255, 250);
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+}
+
+.transactionsHistoryItem div {
+    display: flex;
+    gap: 10px;
+}
+
+.transactionsHistoryItem div p:first-child {
+    font-weight: 300;
+}
+.transactionsHistoryItem p {
+    font-weight: 500;
 }
