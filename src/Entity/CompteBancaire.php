@@ -88,4 +88,21 @@ class CompteBancaire
         $this->utilisateur = $utilisateur;
         return $this;
     }
+
+    #[ORM\PrePersist]
+    public function setSoldeInitial(): void
+    {
+        $this->solde = 10;
+    }
+
+
+    #[ORM\PrePersist]
+
+    public function generateNumeroDeCompte(): void
+    {
+        $this->numero_de_compte = random_int(1000000000, 9999999999);
+    }
+
 }
+
+
