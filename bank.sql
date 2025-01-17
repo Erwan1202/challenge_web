@@ -1,8 +1,7 @@
 -- Créaton de la base de données
 
 -- Utilisation de la base de données    
-
-USE banque;
+USE bank;
 
 
 -- Création de la table Utilisateurs
