@@ -8,6 +8,16 @@ security:
                 class: App\Entity\Utilisateur
                 property: email
 
+    
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/user, roles: ROLE_USER }
+    
+    
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
