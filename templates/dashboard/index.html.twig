@@ -37,10 +37,14 @@
             <tbody>
                 {% for transaction in transactions %}
                     <tr>
-                        <td>{{ transaction.date|date('d/m/Y H:i') }}</td>
+                        <td>{{ transaction.dateHeure|date('d/m/Y H:i') }}</td>
                         <td>{{ transaction.type }}</td>
                         <td>{{ transaction.montant }} €</td>
                         <td>{{ transaction.statut }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucune transaction trouvée.</td>
                     </tr>
                 {% endfor %}
             </tbody>
