@@ -110,6 +110,12 @@ final class TransactionController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            // Validation: le montant doit être supérieur à 0
+            if ($transaction->getMontant() <= 0) {
+                $this->addFlash('error', 'Le montant doit être supérieur à 0.');
+                return $this->redirectToRoute('app_deposit');
+            }
+    
             $transaction->setType('deposit');
             $transaction->setDateHeure(new \DateTime());
             $transaction->setStatut('success'); // Par exemple, un statut par défaut
@@ -143,7 +149,7 @@ public function withdraw(Request $request, EntityManagerInterface $entityManager
     $transaction = new Transaction();
 
     $form = $this->createFormBuilder($transaction)
-        ->add('compte_source', ChoiceType::class, [
+        ->add('compteSource', ChoiceType::class, [
             'label' => 'Compte',
             'choices' => $this->getUser()->getComptes()->toArray(),
             'choice_label' => 'numeroDeCompte',
