@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
             if (in_array('ROLE_ADMIN', $roles, true)) {
                 return $this->redirectToRoute('admin_dashboard'); // Redirection vers le tableau de bord de l'admin
             } else {
-                return $this->redirectToRoute('user_dashboard'); // Redirection vers le tableau de bord de l'utilisateur
+                return $this->redirectToRoute('app_dashboard'); // Redirection vers le tableau de bord de l'utilisateur
             }
         }
 
