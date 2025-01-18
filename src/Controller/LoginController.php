@@ -12,14 +12,15 @@ class LoginController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        // Si l'utilisateur est déjà connecté, le rediriger en fonction de son rôle
         if ($this->getUser()) {
             $roles = $this->getUser()->getRoles();
-        }
-        // Si l'utilisateur est déjà authentifié, redirigez-le en fonction de son rôle
-        if (in_array('ROLE_ADMIN', $roles, TRUE)) {
-            return $this->redirectToRoute('admin_dashboard'); // Redirection vers le tableau de bord de l'admin
-        }else{
-            return $this->redirectToRoute('user_dashboard'); // Redirection vers le tableau de bord de l'utilisateur
+
+            if (in_array('ROLE_ADMIN', $roles, true)) {
+                return $this->redirectToRoute('admin_dashboard'); // Redirection vers le tableau de bord de l'admin
+            } else {
+                return $this->redirectToRoute('user_dashboard'); // Redirection vers le tableau de bord de l'utilisateur
+            }
         }
 
         // obtenir l'erreur de connexion s'il y en a une
