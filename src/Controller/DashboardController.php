@@ -10,25 +10,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
-        #[Route('/dashboard', name: 'app_dashboard')]
-        public function index(
-            CompteBancaireRepository $compteBancaireRepository,
-            TransactionRepository $transactionRepository
-        ): Response {
-            $user = $this->getUser();
+    // Define a route for the dashboard page
+    #[Route('/dashboard', name: 'app_dashboard')]
+    public function index(
+        CompteBancaireRepository $compteBancaireRepository,
+        TransactionRepository $transactionRepository
+    ): Response {
+        // Get the currently logged-in user
+        $user = $this->getUser();
 
-            if (!$user) {
-                throw $this->createAccessDeniedException();
-            }
-
-            // Récupérer les comptes bancaires et les transactions de l'utilisateur connecté
-            $comptes = $compteBancaireRepository->findBy(['utilisateur' => $user]);
-            $transactions = $transactionRepository->findBy([], ['dateHeure' => 'DESC'], 5);
-
-            return $this->render('dashboard/index.html.twig', [
-                'user' => $user,
-                'comptes' => $comptes,
-                'transactions' => $transactions,
-            ]);
+        // If no user is logged in, throw an access denied exception
+        if (!$user) {
+            throw $this->createAccessDeniedException();
         }
+
+        // Retrieve the bank accounts and transactions of the logged-in user
+        $comptes = $compteBancaireRepository->findBy(['utilisateur' => $user]);
+        $transactions = $transactionRepository->findBy([], ['dateHeure' => 'DESC'], 5);
+
+        // Render the dashboard view with the user, accounts, and transactions data
+        return $this->render('dashboard/index.html.twig', [
+            'user' => $user,
+            'comptes' => $comptes,
+            'transactions' => $transactions,
+        ]);
     }
+}
