@@ -257,14 +257,14 @@ main {
 
 
 
-/* CSS pour le formulaire d'inscription •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+/* CSS pour le formulaire d'inscription et de connexion •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
 
-.registerContainer {
+.registerContainer, .loginContainer {
     display: flex;
     justify-content: center;
 }
 
-.registerFormContainer {
+.registerFormContainer, .loginFormContainer {
     display: flex;
     flex-direction: column;
     width: 30vw;
@@ -276,32 +276,32 @@ main {
     -webkit-backdrop-filter: blur(20px);
 }
 
-.registerFormContainer h1 {
+.registerFormContainer h1, .loginFormContainer h1 {
     text-align: center;
     margin: 0;
 }
 
-.registerFormContainer form {
+.registerFormContainer form, .loginFormContainer form {
     display: flex;
     flex-direction: column;
     margin: 0;
     gap: 10px;
 }
 
-.registerFormContainer div {
+.registerFormContainer div, .loginFormContainer div {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-.registerFormContainer div label {
+.registerFormContainer div label, .loginFormContainer div label {
     font-weight: 500;
 }
-.registerFormContainer div input {
+.registerFormContainer div input, .loginFormContainer div input {
     border: 1px solid var(--border-color1);
     border-radius: 10px;
     padding: 10px;
 }
-.registerFormContainer div ul {
+.registerFormContainer div ul, .loginFormContainer .alert-danger {
     margin: 0;
     padding: 5px 10px;
     list-style: none;
@@ -310,20 +310,20 @@ main {
     border-radius: 10px;
 }
 
-.registerFormContainer div:last-of-type {
+.registerFormContainer div:last-of-type, .loginFormContainer div:last-of-type {
     flex-direction: row;
     gap: 5px;
 }
 
-.registerFormContainer button {
+.registerFormContainer button, .loginFormContainer button {
     margin-top: 20px;
     border-radius: 50px;
 }
 
-.registerFormContainer > p {
+.registerFormContainer > p, .loginFormContainer > p {
     font-weight: 300;
 }
-.registerFormContainer > p > a {
+.registerFormContainer > p > a, .loginFormContainer p > a {
     color: var(--text-color);
     text-decoration: underline;
     text-underline-offset: 5px;
