@@ -20,9 +20,16 @@
                 <input type="text" placeholder="Recherche...">
                 <img src="{{ asset('images/search.png') }}" alt="Search Icon">
             </div>
-            <a href="#" class="headerAccount">
-                🧔 Compte
-            </a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('app_dashboard') }}" class="headerAccount">
+            🧔 Mon Compte
+        </a>
+    {% else %}
+        <a href="{{ path('app_login') }}" class="headerAccount">
+            🧔 Connexion
+        </a>
+{% endif %}
+
         </div>
     </header>
 
