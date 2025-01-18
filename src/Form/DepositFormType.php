@@ -2,15 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\BankAccount;
 use App\Entity\Transaction;
-use App\Entity\Users;
+use App\Entity\CompteBancaire;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,45 +16,41 @@ class DepositFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Vérification que l'option 'user' est passée
         if (!isset($options['user'])) {
             throw new \InvalidArgumentException('The "user" option is mandatory');
         }
 
         $builder
-            ->add('ToAccount', EntityType::class, [
-                'label' => 'Compte',
-                'class' => BankAccount::class,
+            ->add('compteSource', EntityType::class, [
+                'class' => CompteBancaire::class,
                 'query_builder' => function (EntityRepository $er) use ($options) {
-                    return $er->createQueryBuilder('ba')
-                        ->where('ba.Users = :user')
+                    // Limite les comptes affichés à ceux de l'utilisateur connecté
+                    return $er->createQueryBuilder('cb')
+                        ->where('cb.utilisateur = :user')
                         ->setParameter('user', $options['user']);
                 },
-                'choice_label' => 'Name',
-                'attr' => ['class' => 'form-control input-field'],
+                'choice_label' => 'numeroDeCompte', // Affiche le numéro de compte dans le formulaire
+                'label' => 'Compte à créditer',
+                'attr' => ['class' => 'form-control'],
             ])
-            ->add('Amount', NumberType::class, [
-                'label' => 'Montant',
+            ->add('montant', MoneyType::class, [
+                'currency' => 'EUR', // Monnaie pour le champ
+                'label' => 'Montant à déposer',
                 'required' => true,
-                'scale' => 2,
-                'attr' => ['class' => 'form-control input-field'],
-            ])
-            ->add('Label', TextType::class, [
-                'label' => 'Libellé',
-                'required' => false,
-                'attr' => ['class' => 'form-control input-field'],
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Effectuer le dépôt',
-                'attr' => ['class' => 'btn btn-primary'],
-            ])
-        ;
+                'attr' => ['class' => 'btn btn-primary mt-3'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Transaction::class,
-            'user' => null,
+            'data_class' => Transaction::class, // Lier le formulaire à l'entité Transaction
+            'user' => null, // Option personnalisée pour passer l'utilisateur
         ]);
     }
 }
