@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
     // Define a route for the dashboard page
-    #[Route('/dashboard', name: 'app_dashboard')]
+    #[Route('/dashboard', name: 'user_dashboard')]
     public function index(
         CompteBancaireRepository $compteBancaireRepository,
         TransactionRepository $transactionRepository
