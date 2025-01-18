@@ -1,0 +1,425 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --background-color1: #FFFFE6;
+    --background-color2: rgba(255, 255, 255, 0.75);
+    --text-color: black;
+    --header-background: rgb(20, 20, 20);
+    --footer-background: black;
+    --footer-background2: #323232;
+    --button-bg: black;
+    --button-border-radius: 10px;
+    --button-text-color: #fff;
+    --border-color1: #ebebeb;
+    --border-color2: rgba(235, 235, 235, 0.75);
+    --accent-color1: #009efe;
+    --accent-color2: #29f598;
+    --accent-color3: #FFDE50;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color1);
+    color: var(--text-color);
+    transition: background-color 0.25s, color 0.25s;
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--button-bg);
+    color: var(--button-text-color);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--button-border-radius);
+}
+button:hover {
+    background-color: var(--accent-color1);
+    transition: 0.25s;
+}
+button:active {
+    background-color: var(--accent-color2);
+    transform: scale(0.95);
+    transition: 0.25s;
+}
+
+
+
+/* CSS pour le header •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+header {
+    position: sticky;
+    top: 0px;
+    width: 20vw;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    margin: 0;
+    align-items: center;
+    padding: 25px;
+    background-color: var(--header-background);
+    border-radius: 0px 25px 25px 0px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 50;
+    transition: 0.25s;
+}
+
+
+.headerLogo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 25px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+}
+.headerLogo img {
+    width: 50px;
+    height: auto;
+}
+.headerLogo img:active {
+    transform: scale(0.95);
+    transition: 0.25s;
+}
+
+
+.headerAccount {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+    gap: 25px;
+    border: 1px solid var(--accent-color3);
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+    transition: 0.25s;
+    overflow-x: auto;
+}
+.headerAccount:hover {
+    filter: brightness(1.25);
+}
+.headerAccount:active {
+    transform: scale(0.95);
+}
+.headerAccount::-webkit-scrollbar {
+    display: none;
+}
+
+.headerAccount img {
+    width: 25px;
+    height: 25px;
+}
+.headerAccount div {
+    display: flex;
+    flex-direction: column;
+}
+.headerAccount div p {
+    margin: 0;
+}
+.headerAccount div p:nth-child(1) {
+    font-weight: 500;
+}
+
+
+
+/* CSS pour le main •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 50px;
+    width: calc(80vw - 100px);
+}
+
+main h1 {
+    margin: 0;
+}
+
+
+
+/* CSS pour le user_dashboard •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.userNav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.headerLinks, .transactionsActionsLinks {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 40px);
+    padding: 10px 20px 10px 20px;
+    gap: 25px;
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+    transition: 0.25s;
+}
+.headerLinks:hover, .transactionsActionsLinks:hover {
+    filter: brightness(1.25);
+}
+.headerLinks:active, .transactionsActionsLinks:active {
+    transform: scale(0.95);
+}
+
+.headerLinks img, .transactionsActionsLinks img {
+    width: 25px;
+    height: 25px;
+}
+.headerLinks div, .transactionsActionsLinks div {
+    display: flex;
+    flex-direction: column;
+}
+.headerLinks div p, .transactionsActionsLinks div p {
+    margin: 0;
+}
+
+
+.accountsList {
+    width: 100%;
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    border-radius: 20px;
+    scrollbar-width: none; 
+}
+.accountsList::-webkit-scrollbar {
+    display: none;
+}
+
+.accountsItem, .accountsItemAdd {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    padding: 20px;
+    min-width: 250px;
+    text-align: center;
+    background-color: var(--accent-color3);
+    border-radius: 20px;
+    gap: 20px;
+    transition: 0.25s;
+}
+.accountsItem:hover {
+    transform: scale(1.05);
+}
+
+.accountsItem h3, .accountsItem p {
+    margin: 0;
+}
+.accountsItem > div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+.accountsItem > div:nth-child(1) > div > p {
+    font-weight: 300;
+}
+.accountsItem > div:nth-child(1) > a {
+    text-decoration: none;
+}
+.accountsItem > div:nth-child(1) > a > img {
+    width: 25px;
+    height: auto;
+}
+.accountsItem > p {
+    font-size: 30px;
+}
+
+.accountsItemAdd {
+    background-color: transparent;
+    border: 1px solid var(--accent-color3);
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: 300;
+}
+.accountsItemAdd img {
+    width: 50px;
+    height: auto;
+}
+.accountsItemAdd:active {
+    transform: scale(0.95);
+}
+
+
+.transactionsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.transactionsActions, .transactionsHistory {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.transactionsActions h2, .transactionsHistory h2 {
+    margin: 0;
+}
+
+.transactionsActionsList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+.transactionsHistory {
+    width: 70%;
+}
+
+.transactionsHistoryList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 275px;
+    overflow-y: auto;
+    scrollbar-width: none; 
+}
+.transactionsHistoryList::-webkit-scrollbar {
+    display: none;
+}
+
+.transactionsHistoryItem {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(255, 255, 250);
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+    align-items: center;
+}
+
+.transactionsHistoryItem div {
+    display: flex;
+    gap: 10px;
+}
+
+.transactionsHistoryItem div p:first-child {
+    font-weight: 300;
+}
+.transactionsHistoryItem p {
+    font-weight: 500;
+}
+.transactionsHistoryItem > a {
+    text-decoration: none;
+}
+.transactionsHistoryItem > a > img {
+    width: 25px;
+    height: auto;
+}
+
+
+
+/* CSS pour le admin_dashboard •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.adminNav {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    flex-direction: row;
+    overflow-x: auto;
+}
+.adminNav::-webkit-scrollbar {
+    display: none;
+}
+
+.headerAdminLinks {
+    display: flex;
+    width: calc(100% - 40px);
+    padding: 20px 20px 20px 20px;
+    gap: 25px;
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+    transition: 0.25s;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerAdminLinks:hover {
+    filter: brightness(1.25);
+}
+.headerAdminLinks:active {
+    transform: scale(0.95);
+}
+.headerAdminLinks img {
+    width: 25px;
+    height: 25px;
+}
+
+.userAccountsList {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    height: 50%;
+    max-height: 50%;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.userAccountsList::-webkit-scrollbar {
+    display: none;
+}
+
+.userAccountsItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 40px);
+    min-height: 50px;
+    background-color: rgb(50, 50, 50);
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    text-decoration: none;
+    transition: 0.25s;
+    overflow-x: auto;
+}
+.userAccountsItem:hover {
+    filter: brightness(1.25);
+}
+.userAccountsItem:active {
+    transform: scale(0.95);
+}
+.userAccountsItem::-webkit-scrollbar {
+    display: none;
+}
+
+.userAccountsItem div {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+.userAccountsItem div:nth-child(1) {
+    font-weight: 500;
+}
+.userAccountsItem div:nth-child(2) {
+    font-weight: 300;
+}
+
+.userAccountsItem div p {
+    margin: 0;
+}

@@ -1,0 +1,98 @@
+{% extends 'dashboard/base_dashboard.html.twig' %}
+
+{% block title %}Tableau de bord Admin{% endblock %}
+
+{% block nav %}
+    <nav class="adminNav">
+        <a href="#" class="headerAdminLinks">
+            <img src="{{ asset('images/accueilClair.png') }}" alt="Tableau de bord">
+        </a>
+        <a href="#accounts" class="headerAdminLinks">
+            <img src="{{ asset('images/carteClair.png') }}" alt="Comptes">
+        </a>
+        <a href="#transactions" class="headerAdminLinks">
+            <img src="{{ asset('images/transactionClair.png') }}" alt="Transactions">
+        </a>
+    </nav>
+{% endblock %}
+
+{% block usersList %}
+
+    {# ajouter un foreach ici #}
+    <div class="userAccountsList">
+        <a href="" class="userAccountsItem">
+            <div>
+                <p>Nom</p> {# ajouter informations dynamiques #}
+                <p>Prénom</p>
+            </div>
+            <div>
+                <p>Email</p>
+                <p>0123456789</p>
+            </div>
+        </a>
+
+    </div>
+{% endblock %}
+
+{% block dashboard_title %}Tableau de bord Admin{% endblock %}
+
+{% block dashboard_content %}
+    <div class="accountsListContainer" id="accounts">
+        <h2>Mes comptes</h2>    
+        <div class="accountsList">
+
+            {# ajouter un foreach ici #}
+            <div class="accountsItem">
+                <div>
+                    <div>
+                        <h3>0123456789</h3> {# ajouter informations dynamiques #}
+                        <p>Type de compte</p>
+                    </div>
+                    <a href=""><img src="{{ asset('images/cadena.png') }}" alt="Bloquer"></a>
+                </div>
+                <p>1000 €</p> 
+            </div>
+
+            <a href="" class="accountsItemAdd">
+                <img src="{{ asset('images/ajouter.png') }}" alt="Ajouter">
+                <p>Ajouter un compte</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="transactionsContainer" id="transactions">
+        <div class="transactionsActions">
+            <h2>Transactions</h2>
+            <div class="transactionsActionsList">
+                <a href="" class="transactionsActionsLinks">
+                    <img src="{{ asset('images/carteClair.png') }}" alt="Dépôt">
+                    <p>Dépôt</p>
+                </a>
+                <a href="" class="transactionsActionsLinks">
+                    <img src="{{ asset('images/carteClair.png') }}" alt="Retrait">
+                    <p>Retrait</p>
+                </a>
+                <a href="" class="transactionsActionsLinks">
+                    <img src="{{ asset('images/carteClair.png') }}" alt="Virement">
+                    <p>Virement</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="transactionsHistory">
+            <h2>Historique des transactions</h2>
+            <div class="transactionsHistoryList">
+                <div class="transactionsHistoryItem">
+                    <div>
+                        <p>15/01/2025 15:15</p> {# ajouter informations dynamiques #}
+                        <p>Type</p>
+                        <p>Statut</p>
+                    </div>
+                    <p>1000 €</p>
+                    <a href=""><img src="{{ asset('images/croix.png') }}" alt="Annuler la transaction"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

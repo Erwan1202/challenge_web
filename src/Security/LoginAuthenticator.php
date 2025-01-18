@@ -55,11 +55,10 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-{
-    // Redirection vers le tableau de bord après connexion réussie
-    return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
-}
-
+    {
+        // Redirection vers le tableau de bord après connexion réussie
+        return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
+    }
 
     protected function getLoginUrl(Request $request): string
     {

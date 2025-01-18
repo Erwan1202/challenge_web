@@ -27,7 +27,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column(type: 'text')]
-    private ?string $mdp_chiffre = null;
+    private ?string $password = null;
 
     #[ORM\Column(type: "json")]
     private array $roles = [];
@@ -80,12 +80,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPassword(): ?string
     {
-        return $this->mdp_chiffre;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
     {
-        $this->mdp_chiffre = $password;
+        $this->password = $password;
         return $this;
     }
 
