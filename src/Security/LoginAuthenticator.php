@@ -13,7 +13,6 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
-use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
@@ -22,21 +21,34 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    private UrlGeneratorInterface $urlGenerator;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function authenticate(Request $request): Passport
     {
-        $email = $request->getPayload()->getString('email');
+        // Récupérer les champs du formulaire
+        $email = $request->request->get('email'); // Correspond au champ "name='email'"
+        $password = $request->request->get('password'); // Correspond au champ "name='password'"
+        $csrfToken = $request->request->get('_csrf_token');
 
-        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+        // Vérifie si l'email est vide
+        if (empty($email)) {
+            throw new \InvalidArgumentException('Email cannot be null or empty.');
+        }
 
+        // Stocker le dernier email dans la session pour le réafficher en cas d'erreur
+        $request->getSession()->set('_security.last_username', $email);
+
+        // Créer un Passport
         return new Passport(
             new UserBadge($email),
-            new PasswordCredentials($request->getPayload()->getString('password')),
+            new PasswordCredentials($password),
             [
-                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
+                new CsrfTokenBadge('authenticate', $csrfToken),
                 new RememberMeBadge(),
             ]
         );
@@ -44,17 +56,13 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
-
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        // Redirection vers le tableau de bord après connexion réussie
+        return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
     }
 
     protected function getLoginUrl(Request $request): string
     {
+        // Retourner l'URL de la page de connexion
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

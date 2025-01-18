@@ -3,18 +3,30 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Inscription</h1>
+    <div class="registerContainer">
+        {% if app.user %}
+            <div class="mb-3">
+                <h1>Bonjour {{ app.user.userIdentifier }}</h1>
+                <a href="{{ path('app_dashboard') }}">Tableau de bord</a>
+                <a href="{{ path('app_logout') }}">Déconnexion</a>
+            </div>
+        {% else %}
+            <div class="registerFormContainer">
+                <h1>Inscription</h1>
 
-    {{ form_start(registrationForm, { 'attr': { 'data-turbo': 'false' } }) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.nom) }}
+                    {{ form_row(registrationForm.prenom) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                {{ form_end(registrationForm) }}
 
-
-        {{ form_rest(registrationForm) }}
-
-        <button type="submit" class="btn">S'inscrire</button>
-    {{ form_end(registrationForm) }}
+                <p>Déjà un compte ? 
+                    <a href="{{ path('app_login') }}">Connectez-vous</a>
+                </p>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

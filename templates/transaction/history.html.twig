@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des Transactions{% endblock %}
+
+{% block main %}
+    <main>
+    <h1>Historique des Transactions</h1>
+
+    {% if transactions is empty %}
+        <p>Aucune transaction trouvée.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>emetteurr</th>
+                    <th>Destinataire</th>
+                    <th>Montant</th>
+                    <th>Type</th>
+                    <th>Libellé</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.date|date('d/m/Y H:i') }}</td>
+                        <td>
+                            {{ transaction.fromAccount ? transaction.fromAccount.getUserId().getFirstname ~ ' ' ~ transaction.fromAccount.getUserId().getLastname 
+                            : 'Non défini' }}
+                        </td>
+                        <td>
+                            {{ transaction.toAccount 
+                            ? transaction.toAccount.getUserId().getFirstname ~ ' ' ~ transaction.toAccount.getUserId().getLastname 
+                            : 'Non défini' }}
+                        </td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>
+                            {% if transaction.type == 0 %}
+                                Virement
+                            {% elseif transaction.type == 1 %}
+                                Dépôt
+                            {% elseif transaction.type == 2 %}
+                                Retrait
+                            {% else %}
+                                Inconnu
+                            {% endif %}
+                        </td>
+                        <td>{{ transaction.label }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    {% endif %}
+{% endblock %}

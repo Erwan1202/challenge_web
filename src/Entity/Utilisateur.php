@@ -2,17 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet email')]
+#[ORM\Entity]
+#[ORM\UniqueConstraint(name: 'unique_email', columns: ['email'])]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,36 +17,27 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    private ?string $email = null;
-
-    /**
-     * @var string Le rôle de l'utilisateur
-     */
-    #[ORM\Column(length: 50)]
-    private ?string $role = 'client';
-
-    /**
-     * @var string Le mot de passe haché
-     */
-    #[ORM\Column(name: "mdp_chiffre", type: "text")]
-    private ?string $password = null;
-
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
     private ?string $prenom = null;
 
-    /**
-     * @var Collection<int, CompteBancaire>
-     */
-    #[ORM\OneToMany(targetEntity: CompteBancaire::class, mappedBy: 'utilisateur', orphanRemoval: true)]
-    private Collection $compteBancaire;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column(type: 'text')]
+    private ?string $password = null;
+
+    #[ORM\Column(type: "json")]
+    private array $roles = [];
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: CompteBancaire::class)]
+    private Collection $comptes;
 
     public function __construct()
     {
-        $this->compteBancaire = new ArrayCollection();
+        $this->comptes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,82 +45,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     *
-     * @return array<string> Un tableau contenant le rôle
-     */
-    public function getRoles(): array
-    {
-        return [$this->role];
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // Si vous stockez des données temporaires sensibles, nettoyez-les ici
-    }
-
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -141,37 +61,82 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, CompteBancaire>
-     */
-    public function getCompteBancaire(): Collection
+    public function getEmail(): ?string
     {
-        return $this->compteBancaire;
+        return $this->email;
     }
 
-    public function addCompteBancaire(CompteBancaire $compteBancaire): static
+    public function setEmail(string $email): self
     {
-        if (!$this->compteBancaire->contains($compteBancaire)) {
-            $this->compteBancaire->add($compteBancaire);
-            $compteBancaire->setUtilisateur($this);
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Efface les données sensibles si nécessaire.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email; // Utilisez l'email comme identifiant unique
+    }
+
+    public function getComptes(): Collection
+    {
+        return $this->comptes;
+    }
+
+    public function addCompte(CompteBancaire $compte): self
+    {
+        if (!$this->comptes->contains($compte)) {
+            $this->comptes[] = $compte;
+            $compte->setUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removeCompteBancaire(CompteBancaire $compteBancaire): static
+    public function removeCompte(CompteBancaire $compte): self
     {
-        if ($this->compteBancaire->removeElement($compteBancaire)) {
-            // Set the owning side to null (unless already changed)
-            if ($compteBancaire->getUtilisateur() === $this) {
-                $compteBancaire->setUtilisateur(null);
+        if ($this->comptes->removeElement($compte)) {
+            if ($compte->getUtilisateur() === $this) {
+                $compte->setUtilisateur(null);
             }
         }
 
