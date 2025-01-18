@@ -5,31 +5,48 @@ namespace App\Entity;
 use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
 {
+    public const TYPE_DEPOSIT = 'deposit';
+    public const TYPE_WITHDRAW = 'withdraw';
+    public const TYPE_TRANSFER = 'transfer';
+
+    public const STATUS_SUCCESS = 'success';
+    public const STATUS_FAILED = 'failed';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: [self::TYPE_DEPOSIT, self::TYPE_WITHDRAW, self::TYPE_TRANSFER], message: 'Type de transaction invalide.')]
     private ?string $type = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\Positive(message: 'Le montant doit être supérieur à 0.')]
     private ?float $montant = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
     private ?\DateTimeInterface $dateHeure = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: [self::STATUS_SUCCESS, self::STATUS_FAILED], message: 'Statut invalide.')]
     private ?string $statut = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: CompteBancaire::class)]
+    #[ORM\JoinColumn(nullable: true)] // Peut-être null pour certaines transactions
     private ?CompteBancaire $compteSource = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: CompteBancaire::class)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?CompteBancaire $compteDestination = null;
 
     public function getId(): ?int

@@ -14,7 +14,7 @@ class CompteBancaire
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(unique: true)]
+    #[ORM\Column(type: 'string', length: 20)]
     private ?string $numero_de_compte = null;
 
     #[ORM\Column(length: 255)]
@@ -97,10 +97,14 @@ class CompteBancaire
         $this->verifierRèglesGestion(); // Vérifie les règles de gestion avant l'enregistrement
     }
 
-    private function generateNumeroDeCompte(): void
+    #[ORM\PrePersist]
+    public function generateNumeroDeCompte(): void
     {
-        $this->numero_de_compte = uniqid('CB'); // Génération d'un identifiant unique
+        $this->numero_de_compte = random_int(1000000000, 9999999999);
     }
+
+    
+
 
     public function verifierRèglesGestion(): void
     {
