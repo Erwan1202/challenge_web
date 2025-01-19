@@ -159,6 +159,13 @@ final class TransactionController extends AbstractController
                 return $this->redirectToRoute('app_transfer');
             }
     
+            // Vérification de la limite de 25 000€ sur les comptes épargne
+            if ($compteDestination->getType() === 'epargne' && ($compteDestination->getSolde() + $montant) > 25000) {
+                $this->addFlash('error', 'Le montant total du compte épargne ne peut pas dépasser 25 000€ après le virement.');
+                return $this->redirectToRoute('app_transfer');
+            }
+    
+            // Vérification du solde suffisant sur le compte source
             if ($compteSource->getSolde() >= $montant) {
                 // Mise à jour des soldes
                 $compteSource->setSolde($compteSource->getSolde() - $montant);
