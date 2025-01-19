@@ -42,7 +42,10 @@ composer install
 3. Set up environment variables: Copy the .env file to .env.local:
 
 
-copy and paste the .env to .env.local and change DATABASE_URL="mysql://username:password@127.0.0.1:3306/database_name" with your database information (msql for mysql or pgsql)
+copy and paste the .env to .env.local and change :
+
+
+DATABASE_URL="mysql://your_username:your_password@127.0.0.1:3306/bank" with your database information (msql for mysql or pgsql)
 
 
 4. Set up the database: Run the following commands to create the database and apply migrations:
