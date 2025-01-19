@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Form;
 
 use App\Entity\CompteBancaire;
@@ -16,19 +14,15 @@ class WithdrawFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('from_account', EntityType::class, [
-                'class' => CompteBancaire::class,
-                'choice_label' => 'numero_de_compte',
+            ->add('compteSource', EntityType::class, [
+                'class' => CompteBancaire::class, // Liaison avec l'entité CompteBancaire
+                'choice_label' => 'numeroDeCompte', // Affichage du numéro de compte
                 'label' => 'Compte source',
-                'placeholder' => 'Sélectionnez un compte',
+                'placeholder' => 'Sélectionnez un compte', // Ajout d'un placeholder pour guider l'utilisateur
             ])
-            ->add('amount', MoneyType::class, [
-                'label' => 'Montant du retrait',
-                'currency' => 'EUR',
-            ])
-            ->add('label', TextType::class, [
-                'label' => 'Description (optionnel)',
-                'required' => false,
+            ->add('montant', MoneyType::class, [
+                'label' => 'Montant à retirer',
+                'currency' => 'EUR', // La devise en EUR
             ]);
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\Transaction;
 use App\Entity\CompteBancaire;
 use App\Form\DepositFormType;
 use App\Form\TransactionType;
+use App\Form\WithdrawFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,24 +22,22 @@ final class TransactionController extends AbstractController
     {
         $transaction = new Transaction();
     
-        // Initialisation des champs manquants
-        $transaction->setType(Transaction::TYPE_DEPOSIT);  // Définir le type de transaction
-        $transaction->setDateHeure(new \DateTime());  // Définir la date et l'heure du dépôt
-        $transaction->setStatut(Transaction::STATUS_SUCCESS);  // Définir le statut de la transaction
+        // Définir les valeurs par défaut pour 'type', 'dateHeure' et 'statut'
+        $transaction->setType(Transaction::TYPE_DEPOSIT);  // Type de transaction (dépôt)
+        $transaction->setDateHeure(new \DateTime());  // Date et heure actuelles
+        $transaction->setStatut(Transaction::STATUS_SUCCESS);  // Statut de la transaction (succès)
     
-        // Création du formulaire
+        // Construction du formulaire
         $form = $this->createForm(DepositFormType::class, $transaction, [
             'user' => $this->getUser(),
         ]);
-    
         $form->handleRequest($request);
     
-        // Validation et gestion de la soumission du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupérer le compte sélectionné et effectuer le dépôt
             $compteSource = $transaction->getCompteSource();
-            if (!$compteSource) {
-                $this->addFlash('error', 'Veuillez sélectionner un compte valide.');
+    
+            if ($compteSource->getType() === 'epargne' && ($compteSource->getSolde() + $transaction->getMontant()) > 25000) {
+                $this->addFlash('error', 'Le montant total sur votre compte épargne ne doit pas dépasser 25 000€.'); 
                 return $this->redirectToRoute('app_deposit');
             }
     
@@ -56,61 +55,59 @@ final class TransactionController extends AbstractController
             return $this->redirectToRoute('app_dashboard');
         }
     
-        // Rendu du formulaire
         return $this->render('transaction/deposit.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
+    }     
     
 
     #[Route('/transaction/withdraw', name: 'app_withdraw')]
     public function withdraw(Request $request, EntityManagerInterface $entityManager): Response
     {
         $transaction = new Transaction();
-
-        $form = $this->createFormBuilder($transaction)
-            ->add('compteSource', ChoiceType::class, [
-                'label' => 'Compte',
-                'choices' => $this->getUser()->getComptes()->toArray(),
-                'choice_label' => 'numeroDeCompte',
-            ])
-            ->add('montant', MoneyType::class, [
-                'label' => 'Montant à retirer',
-                'currency' => 'EUR',
-            ])
-            ->getForm();
-
+        
+        // Définir les valeurs par défaut pour 'type', 'dateHeure' et 'statut'
+        $transaction->setType(Transaction::TYPE_WITHDRAW);  // Utilisation de TYPE_WITHDRAW ici
+        $transaction->setDateHeure(new \DateTime());  // Date et heure actuelles
+        $transaction->setStatut(Transaction::STATUS_SUCCESS);  // Statut de la transaction (succès)
+    
+        $form = $this->createForm(WithdrawFormType::class, $transaction);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $compte = $transaction->getCompteSource();
-            if (!$compte) {
-                $this->addFlash('error', 'Compte invalide.');
+            $compteSource = $transaction->getCompteSource();
+            $montantRetrait = $transaction->getMontant();
+    
+            // Vérification pour un compte courant
+            if ($compteSource->getType() === 'courant') {
+                if (($compteSource->getSolde() - $montantRetrait) < -400) {
+                    $this->addFlash('error', 'Le solde ne peut pas descendre en dessous de -400€ sur un compte courant.');
+                    return $this->redirectToRoute('app_withdraw');
+                }
+            }
+    
+            // Vérification pour un compte épargne
+            if ($compteSource->getType() === 'epargne' && $compteSource->getSolde() < $montantRetrait) {
+                $this->addFlash('error', 'Le solde est insuffisant pour effectuer ce retrait.');
                 return $this->redirectToRoute('app_withdraw');
             }
-
-            // Vérification du solde
-            if ($compte->getSolde() >= $transaction->getMontant()) {
-                $compte->setSolde($compte->getSolde() - $transaction->getMontant());
-                $transaction->setType(Transaction::TYPE_WITHDRAW);
-                $transaction->setDateHeure(new \DateTime());
-                $transaction->setStatut(Transaction::STATUS_SUCCESS);
-
-                $entityManager->persist($compte);
-                $entityManager->persist($transaction);
-                $entityManager->flush();
-
-                $this->addFlash('success', 'Retrait effectué avec succès.');
-                return $this->redirectToRoute('app_dashboard');
-            } else {
-                $this->addFlash('error', 'Solde insuffisant.');
-            }
+    
+            // Mise à jour du solde du compte après le retrait
+            $compteSource->setSolde($compteSource->getSolde() - $montantRetrait);
+    
+            // Persister les entités
+            $entityManager->persist($compteSource);
+            $entityManager->persist($transaction);
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'Retrait effectué avec succès.');
+            return $this->redirectToRoute('app_dashboard');
         }
-
+    
         return $this->render('transaction/withdraw.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
+    }    
 
     #[Route('/transaction/new', name: 'app_transaction_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

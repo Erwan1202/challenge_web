@@ -132,14 +132,14 @@ class CompteBancaire
     {
         // Validation pour les comptes épargne
         if ($this->type === 'epargne' && $this->solde < 10.0) {
-            throw new \InvalidArgumentException('Un compte épargne doit avoir un solde initial d’au moins 10€.');
+            throw new \InvalidArgumentException('Un compte épargne doit avoir un solde initial d\'au moins 10€.');
         }
-
+    
         // Définir le découvert autorisé pour les comptes courants
         if ($this->type === 'courant') {
-            $this->decouvertAutorise = 400.0;
+            $this->decouvertAutorise = 400.0;  // Découvert autorisé à 400€ pour un compte courant
         } else {
-            $this->decouvertAutorise = 0;
+            $this->decouvertAutorise = 0.0;  // Pas de découvert pour un compte épargne
         }
-    }
+    }    
 }

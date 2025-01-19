@@ -6,9 +6,14 @@
 <h1>Retirer de l'Argent du Compte</h1>
 
 <form action="{{ path('app_withdraw') }}" method="post">
-    <label for="montant">Montant à retirer:</label>
-    <input type="number" id="montant" name="montant" required min="0" step="any">
+    {{ form_start(form) }}
+    
+    {{ form_row(form.compteSource) }}  {# Affichez le champ pour sélectionner un compte source #}
+    {{ form_row(form.montant) }}       {# Affichez le champ pour le montant #}
 
     <button type="submit">Retirer</button>
+    
+    {{ form_end(form) }}
 </form>
+
 {% endblock %}
