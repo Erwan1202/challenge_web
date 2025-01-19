@@ -7,6 +7,7 @@ use App\Entity\CompteBancaire;
 use App\Form\DepositFormType;
 use App\Form\TransactionType;
 use App\Form\WithdrawFormType;
+use App\Form\TransferFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -132,56 +133,39 @@ final class TransactionController extends AbstractController
     #[Route('/transaction/transfer', name: 'app_transfer')]
     public function transfer(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Récupérer toutes les transactions (ajustez la requête si nécessaire)
-        $transactions = $entityManager->getRepository(Transaction::class)->findAll();
-
         $transaction = new Transaction();
-
-        $form = $this->createFormBuilder($transaction)
-            ->add('compteSource', ChoiceType::class, [
-                'label' => 'Compte source',
-                'choices' => $this->getUser()->getComptes()->toArray(),
-                'choice_label' => 'numeroDeCompte',
-            ])
-            ->add('compteDestination', ChoiceType::class, [
-                'label' => 'Compte destination',
-                'choices' => $entityManager->getRepository(CompteBancaire::class)->findAll(),
-                'choice_label' => 'numeroDeCompte',
-            ])
-            ->add('montant', MoneyType::class, [
-                'label' => 'Montant à transférer',
-                'currency' => 'EUR',
-            ])
-            ->getForm();
-
+    
+        // Définir les valeurs par défaut pour 'type', 'dateHeure' et 'statut'
+        $transaction->setType(Transaction::TYPE_TRANSFER);  // Type de la transaction
+        $transaction->setDateHeure(new \DateTime());  // Date et heure actuelles
+        $transaction->setStatut(Transaction::STATUS_SUCCESS);  // Statut de la transaction (succès)
+    
+        $form = $this->createForm(TransferFormType::class, $transaction);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $compteSource = $transaction->getCompteSource();
             $compteDestination = $transaction->getCompteDestination();
-
-            if ($compteSource->getSolde() >= $transaction->getMontant()) {
-                $compteSource->setSolde($compteSource->getSolde() - $transaction->getMontant());
-                $compteDestination->setSolde($compteDestination->getSolde() + $transaction->getMontant());
-
-                $transaction->setType(Transaction::TYPE_TRANSFER);
-                $transaction->setDateHeure(new \DateTime());
-                $transaction->setMontant($transaction->getMontant());
-
+            $montant = $transaction->getMontant();
+    
+            if ($compteSource->getSolde() >= $montant) {
+                // Mise à jour des soldes
+                $compteSource->setSolde($compteSource->getSolde() - $montant);
+                $compteDestination->setSolde($compteDestination->getSolde() + $montant);
+    
+                // Persister la transaction
                 $entityManager->persist($transaction);
                 $entityManager->flush();
-
+    
                 $this->addFlash('success', 'Virement effectué avec succès.');
                 return $this->redirectToRoute('app_dashboard');
             } else {
                 $this->addFlash('error', 'Solde insuffisant.');
             }
         }
-
-        // Passer la variable `transactions` au template
+    
         return $this->render('transaction/transfer.html.twig', [
             'form' => $form->createView(),
-            'transactions' => $transactions, // Ajouter cette ligne
         ]);
-    }
+    }     
 }

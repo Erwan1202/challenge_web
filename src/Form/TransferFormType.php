@@ -14,25 +14,23 @@ class TransferFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('from_account', EntityType::class, [
+            // Change 'from_account' to 'compteSource'
+            ->add('compteSource', EntityType::class, [
                 'class' => CompteBancaire::class,
-                'choice_label' => 'numero_de_compte',
+                'choice_label' => 'numeroDeCompte',
                 'label' => 'Compte source',
                 'placeholder' => 'Sélectionnez un compte',
             ])
-            ->add('to_account', EntityType::class, [
+            // Change 'to_account' to 'compteDestination'
+            ->add('compteDestination', EntityType::class, [
                 'class' => CompteBancaire::class,
-                'choice_label' => 'numero_de_compte',
+                'choice_label' => 'numeroDeCompte',
                 'label' => 'Compte destinataire',
                 'placeholder' => 'Sélectionnez un compte',
             ])
-            ->add('amount', MoneyType::class, [
+            ->add('montant', MoneyType::class, [
                 'label' => 'Montant du virement',
                 'currency' => 'EUR',
-            ])
-            ->add('label', TextType::class, [
-                'label' => 'Description (optionnel)',
-                'required' => false,
             ]);
     }
 }
