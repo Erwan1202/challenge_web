@@ -24,7 +24,6 @@ Ensure you have the following installed on your system:
 - **Composer** (Install via [getcomposer.org](https://getcomposer.org/))
 - **Symfony CLI** (Install via [symfony.com/download](https://symfony.com/download))
 - **Database** (MySQL or PostgreSQL)
-- **Node.js and npm** (Optional, for managing assets)
 
 ### Installation Steps
 
