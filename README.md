@@ -30,8 +30,8 @@ Ensure you have the following installed on your system:
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
-   cd <project-directory>
+   git clone <https://github.com/Erwan1202/challenge_web.git>
+   cd <challenge_web>
 
 
 2. Install PHP dependencies:
