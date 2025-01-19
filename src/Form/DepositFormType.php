@@ -32,6 +32,7 @@ class DepositFormType extends AbstractType
                 },
                 'choice_label' => 'numeroDeCompte', // Affiche le numéro de compte dans le formulaire
                 'label' => 'Compte à créditer',
+                'required' => true, // Le compte source est requis pour un dépôt
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('montant', MoneyType::class, [
@@ -52,5 +53,8 @@ class DepositFormType extends AbstractType
             'data_class' => Transaction::class, // Lier le formulaire à l'entité Transaction
             'user' => null, // Option personnalisée pour passer l'utilisateur
         ]);
+
+        // Ajout d'une option 'user' pour l'utilisateur connecté
+        $resolver->setRequired(['user']);
     }
 }

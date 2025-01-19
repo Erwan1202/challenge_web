@@ -27,8 +27,6 @@ class Transaction
     #[Assert\Choice(choices: [self::TYPE_DEPOSIT, self::TYPE_WITHDRAW, self::TYPE_TRANSFER], message: 'Type de transaction invalide.')]
     private ?string $type = null;
 
-
-
     #[ORM\Column]
     #[Assert\NotNull]
     #[Assert\Positive(message: 'Le montant doit être supérieur à 0.')]
@@ -44,11 +42,11 @@ class Transaction
     private ?string $statut = null;
 
     #[ORM\ManyToOne(targetEntity: CompteBancaire::class, inversedBy: 'transactionsAsSource')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?CompteBancaire $compteSource = null;
 
     #[ORM\ManyToOne(targetEntity: CompteBancaire::class, inversedBy: 'transactionsAsDestination')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?CompteBancaire $compteDestination = null;
 
     public function getId(): ?int
