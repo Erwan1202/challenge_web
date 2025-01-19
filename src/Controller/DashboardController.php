@@ -27,9 +27,17 @@ class DashboardController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        // Récupérer les comptes bancaires et les transactions de l'utilisateur
+        // Récupérer les comptes bancaires de l'utilisateur
         $comptes = $compteBancaireRepository->findBy(['utilisateur' => $user]);
-        $transactions = $transactionRepository->findBy([], ['dateHeure' => 'DESC'], 5);
+
+        // Récupérer les transactions des comptes de l'utilisateur ou les transactions de virement où l'utilisateur est le destinataire
+        $transactions = $transactionRepository->createQueryBuilder('t')
+            ->where('t.compteSource IN (:comptes) OR t.compteDestination IN (:comptes)')
+            ->setParameter('comptes', $comptes)
+            ->orderBy('t.dateHeure', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
 
         // Rendre la vue du tableau de bord
         return $this->render('dashboard/user_dashboard.html.twig', [
@@ -39,36 +47,33 @@ class DashboardController extends AbstractController
         ]);
     }
 
-        // Route pour supprimer un compte bancaire
-        #[Route('/dashboard/delete/{id}', name: 'app_dashboard_delete', methods: ['POST'])]
-        
-        public function delete(Request $request, CompteBancaire $compteBancaire, EntityManagerInterface $entityManager): Response
-        {
-            // Vérifiez le token CSRF
-            if ($this->isCsrfTokenValid('delete' . $compteBancaire->getId(), $request->request->get('_token'))) {
-                // Supprimez les transactions où ce compte est la source
-                foreach ($compteBancaire->getTransactionsAsSource() as $transaction) {
-                    $entityManager->remove($transaction);
-                }
-        
-                // Supprimez les transactions où ce compte est la destination
-                foreach ($compteBancaire->getTransactionsAsDestination() as $transaction) {
-                    $entityManager->remove($transaction);
-                }
-        
-                // Supprimez le compte bancaire
-                $entityManager->remove($compteBancaire);
-                $entityManager->flush();
-        
-                // Redirigez vers le tableau de bord après la suppression
-                $this->addFlash('success', 'Le compte bancaire a été supprimé avec succès.');
-                return $this->redirectToRoute('app_dashboard');
+    // Route pour supprimer un compte bancaire
+    #[Route('/dashboard/delete/{id}', name: 'app_dashboard_delete', methods: ['POST'])]
+    public function delete(Request $request, CompteBancaire $compteBancaire, EntityManagerInterface $entityManager): Response
+    {
+        // Vérifiez le token CSRF
+        if ($this->isCsrfTokenValid('delete' . $compteBancaire->getId(), $request->request->get('_token'))) {
+            // Supprimez les transactions où ce compte est la source
+            foreach ($compteBancaire->getTransactionsAsSource() as $transaction) {
+                $entityManager->remove($transaction);
             }
-        
-            // Si le token CSRF est invalide, affichez un message d'erreur
-            $this->addFlash('error', 'Échec de la suppression du compte bancaire.');
+    
+            // Supprimez les transactions où ce compte est la destination
+            foreach ($compteBancaire->getTransactionsAsDestination() as $transaction) {
+                $entityManager->remove($transaction);
+            }
+    
+            // Supprimez le compte bancaire
+            $entityManager->remove($compteBancaire);
+            $entityManager->flush();
+    
+            // Redirigez vers le tableau de bord après la suppression
+            $this->addFlash('success', 'Le compte bancaire a été supprimé avec succès.');
             return $this->redirectToRoute('app_dashboard');
         }
-        
-
+    
+        // Si le token CSRF est invalide, affichez un message d'erreur
+        $this->addFlash('error', 'Échec de la suppression du compte bancaire.');
+        return $this->redirectToRoute('app_dashboard');
+    }
 }

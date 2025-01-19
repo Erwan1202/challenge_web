@@ -79,7 +79,7 @@
                 {% for transaction in transactions %}
                     <div class="transactionsHistoryItem">
                         <div>
-                            <p>{{ transaction.dateHeure|date('d/m/Y H:i') }}</p> {# ajouter informations dynamiques #}
+                            <p>{{ transaction.dateHeure|date('d/m/Y H:i') }}</p>
                             <p>{{ transaction.type }}</p>
                             <p>{{ transaction.statut }}</p>
                         </div>
