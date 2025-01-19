@@ -15,54 +15,65 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 class CompteController extends AbstractController
 {
     #[Route('/add', name: 'app_add_compte')]
-    public function addCompte(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        // Créez un nouvel objet CompteBancaire
-        $compte = new CompteBancaire();
+public function addCompte(Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Récupérer l'utilisateur connecté
+    $user = $this->getUser();
 
-        // Créez le formulaire sans le champ `numeroDeCompte`
-        $form = $this->createFormBuilder($compte)
-            ->add('type', ChoiceType::class, [
-                'label' => 'Type de compte',
-                'choices' => [
-                    'Épargne' => 'epargne',
-                    'Courant' => 'courant',
-                ],
-            ])
-            ->add('solde', NumberType::class, [
-                'label' => 'Solde initial',
-                'required' => true,
-            ])
-            ->getForm();
+    // Vérifier si l'utilisateur a déjà atteint la limite de 5 comptes
+    $existingAccounts = $user->getComptes()->count();
+    if ($existingAccounts >= 5) {
+        $this->addFlash('error', 'Vous ne pouvez pas créer plus de 5 comptes bancaires.');
+        return $this->redirectToRoute('app_dashboard');
+    }
 
-        $form->handleRequest($request);
+    // Créer un nouvel objet CompteBancaire
+    $compte = new CompteBancaire();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Génération automatique d'un numéro de compte unique
-            $compte->setNumeroDeCompte(random_int(1000000000, 9999999999));
+    // Créer le formulaire sans le champ `numeroDeCompte`
+    $form = $this->createFormBuilder($compte)
+        ->add('type', ChoiceType::class, [
+            'label' => 'Type de compte',
+            'choices' => [
+                'Épargne' => 'epargne',
+                'Courant' => 'courant',
+            ],
+        ])
+        ->add('solde', NumberType::class, [
+            'label' => 'Solde initial',
+            'required' => true,
+        ])
+        ->getForm();
 
-            // Ajout de l'utilisateur connecté comme propriétaire du compte
-            $compte->setUtilisateur($this->getUser());
+    $form->handleRequest($request);
 
-            // Ajout des règles de gestion
-            if ($compte->getType() === 'epargne' && $compte->getSolde() < 10) {
-                $this->addFlash('error', 'Le solde initial d’un compte épargne doit être d’au moins 10 €.');
-                return $this->redirectToRoute('app_add_compte');
-            }
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Générer automatiquement un numéro de compte unique
+        $compte->setNumeroDeCompte(random_int(1000000000, 9999999999));
 
-            if ($compte->getType() === 'courant') {
-                $compte->setDecouvertAutorise(400); // Définir un découvert autorisé pour les comptes courants
-            }
+        // Associer l'utilisateur connecté comme propriétaire du compte
+        $compte->setUtilisateur($user);
 
-            $entityManager->persist($compte);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Compte bancaire ajouté avec succès.');
-            return $this->redirectToRoute('app_dashboard');
+        // Appliquer les règles de gestion
+        if ($compte->getType() === 'epargne' && $compte->getSolde() < 10) {
+            $this->addFlash('error', 'Le solde initial d’un compte épargne doit être d’au moins 10 €.');
+            return $this->redirectToRoute('app_add_compte');
         }
 
-        return $this->render('compte/add.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        if ($compte->getType() === 'courant') {
+            $compte->setDecouvertAutorise(400); // Définit un découvert autorisé pour les comptes courants à hauteur de 400 €
+        }
+
+        $entityManager->persist($compte);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Compte bancaire ajouté avec succès.');
+        return $this->redirectToRoute('app_dashboard');
     }
+
+    return $this->render('compte/add.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
 }
