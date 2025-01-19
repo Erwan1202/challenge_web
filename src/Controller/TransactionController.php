@@ -71,14 +71,17 @@ final class TransactionController extends AbstractController
         $transaction->setType(Transaction::TYPE_WITHDRAW);  // Utilisation de TYPE_WITHDRAW ici
         $transaction->setDateHeure(new \DateTime());  // Date et heure actuelles
         $transaction->setStatut(Transaction::STATUS_SUCCESS);  // Statut de la transaction (succès)
-    
-        $form = $this->createForm(WithdrawFormType::class, $transaction);
+        
+        // Créer le formulaire et passer l'utilisateur connecté
+        $form = $this->createForm(WithdrawFormType::class, $transaction, [
+            'user' => $this->getUser(),  // Passer l'utilisateur connecté
+        ]);
         $form->handleRequest($request);
-    
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $compteSource = $transaction->getCompteSource();
             $montantRetrait = $transaction->getMontant();
-    
+        
             // Vérification pour un compte courant
             if ($compteSource->getType() === 'courant') {
                 if (($compteSource->getSolde() - $montantRetrait) < -400) {
@@ -86,25 +89,25 @@ final class TransactionController extends AbstractController
                     return $this->redirectToRoute('app_withdraw');
                 }
             }
-    
+        
             // Vérification pour un compte épargne
             if ($compteSource->getType() === 'epargne' && $compteSource->getSolde() < $montantRetrait) {
                 $this->addFlash('error', 'Le solde est insuffisant pour effectuer ce retrait.');
                 return $this->redirectToRoute('app_withdraw');
             }
-    
+        
             // Mise à jour du solde du compte après le retrait
             $compteSource->setSolde($compteSource->getSolde() - $montantRetrait);
-    
+        
             // Persister les entités
             $entityManager->persist($compteSource);
             $entityManager->persist($transaction);
             $entityManager->flush();
-    
+        
             $this->addFlash('success', 'Retrait effectué avec succès.');
             return $this->redirectToRoute('app_dashboard');
         }
-    
+        
         return $this->render('transaction/withdraw.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -134,19 +137,27 @@ final class TransactionController extends AbstractController
     public function transfer(Request $request, EntityManagerInterface $entityManager): Response
     {
         $transaction = new Transaction();
-    
+        
         // Définir les valeurs par défaut pour 'type', 'dateHeure' et 'statut'
         $transaction->setType(Transaction::TYPE_TRANSFER);  // Type de la transaction
         $transaction->setDateHeure(new \DateTime());  // Date et heure actuelles
         $transaction->setStatut(Transaction::STATUS_SUCCESS);  // Statut de la transaction (succès)
-    
-        $form = $this->createForm(TransferFormType::class, $transaction);
+        
+        $form = $this->createForm(TransferFormType::class, $transaction, [
+            'user' => $this->getUser(),  // Passer l'utilisateur connecté au formulaire
+        ]);
         $form->handleRequest($request);
-    
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $compteSource = $transaction->getCompteSource();
             $compteDestination = $transaction->getCompteDestination();
             $montant = $transaction->getMontant();
+    
+            // Vérification si les comptes source et destination sont identiques
+            if ($compteSource === $compteDestination) {
+                $this->addFlash('error', 'Vous ne pouvez pas transférer de l\'argent entre le même compte.');
+                return $this->redirectToRoute('app_transfer');
+            }
     
             if ($compteSource->getSolde() >= $montant) {
                 // Mise à jour des soldes
@@ -163,9 +174,9 @@ final class TransactionController extends AbstractController
                 $this->addFlash('error', 'Solde insuffisant.');
             }
         }
-    
+        
         return $this->render('transaction/transfer.html.twig', [
             'form' => $form->createView(),
         ]);
-    }     
+    }    
 }
