@@ -20,53 +20,48 @@ final class TransactionController extends AbstractController
     public function deposit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $transaction = new Transaction();
-
+    
+        // Initialisation des champs manquants
+        $transaction->setType(Transaction::TYPE_DEPOSIT);  // Définir le type de transaction
+        $transaction->setDateHeure(new \DateTime());  // Définir la date et l'heure du dépôt
+        $transaction->setStatut(Transaction::STATUS_SUCCESS);  // Définir le statut de la transaction
+    
         // Création du formulaire
         $form = $this->createForm(DepositFormType::class, $transaction, [
             'user' => $this->getUser(),
         ]);
-
+    
         $form->handleRequest($request);
-
-        // Validation du formulaire
+    
+        // Validation et gestion de la soumission du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            // Validation du montant
-            if ($transaction->getMontant() <= 0) {
-                $this->addFlash('error', 'Le montant doit être supérieur à 0.');
-                return $this->redirectToRoute('app_deposit');
-            }
-
-            // Récupérer le compte sélectionné
+            // Récupérer le compte sélectionné et effectuer le dépôt
             $compteSource = $transaction->getCompteSource();
             if (!$compteSource) {
                 $this->addFlash('error', 'Veuillez sélectionner un compte valide.');
                 return $this->redirectToRoute('app_deposit');
             }
-
+    
             // Mise à jour du solde du compte
             $nouveauSolde = $compteSource->getSolde() + $transaction->getMontant();
             $compteSource->setSolde($nouveauSolde);
-
-            // Définir les propriétés de la transaction
-            $transaction->setType(Transaction::TYPE_DEPOSIT);
-            $transaction->setDateHeure(new \DateTime());
-            $transaction->setStatut(Transaction::STATUS_SUCCESS);
-
-            // Persister les modifications
-            $entityManager->persist($compteSource); // Persister le compte mis à jour
-            $entityManager->persist($transaction); // Persister la transaction
+    
+            // Persister les entités
+            $entityManager->persist($compteSource);  // Persister le compte mis à jour
+            $entityManager->persist($transaction);  // Persister la transaction
             $entityManager->flush();
-
-            // Ajout d'un message de succès
+    
+            // Message de succès
             $this->addFlash('success', 'Dépôt effectué avec succès.');
             return $this->redirectToRoute('app_dashboard');
         }
-
+    
         // Rendu du formulaire
         return $this->render('transaction/deposit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+    
 
     #[Route('/transaction/withdraw', name: 'app_withdraw')]
     public function withdraw(Request $request, EntityManagerInterface $entityManager): Response

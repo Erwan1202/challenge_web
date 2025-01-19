@@ -30,9 +30,8 @@ class DepositFormType extends AbstractType
                     ->setParameter('user', $options['user']);
             },
             'choice_label' => 'numeroDeCompte',
-            'label' => 'Compte à créditer',
+            'label' => 'Compte sur lequel effectuer le dépôt',
         ])
-    
         ->add('montant', MoneyType::class, [
             'currency' => 'EUR',
             'label' => 'Montant à déposer',
@@ -40,7 +39,6 @@ class DepositFormType extends AbstractType
         ->add('submit', SubmitType::class, [
             'label' => 'Effectuer le dépôt',
         ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

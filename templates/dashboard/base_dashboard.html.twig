@@ -23,8 +23,8 @@
             {# <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p> #}
             {# <p>{{ utilisateur.email }}</p> #}
             <div>
-                <p>Nom Prénom</p> {# ajouter informations dynamiques #}
-                <p>Email</p>
+                <p>{{ app.user.nom }} {{ app.user.prenom }}</p> {# ajouter informations dynamiques #}
+                <p>{{ app.user.email }}</p>
             </div>
         </a>
 
