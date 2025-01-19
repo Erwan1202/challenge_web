@@ -29,8 +29,8 @@ Ensure you have the following installed on your system:
 
 1. **Clone the repository**:
    ```bash
-   git clone <https://github.com/Erwan1202/challenge_web.git>
-   cd <challenge_web>
+   git clone https://github.com/Erwan1202/challenge_web.git
+   cd challenge_web
 
 
 2. **Install PHP dependencies**:
