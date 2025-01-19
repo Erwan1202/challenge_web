@@ -54,6 +54,17 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Assert\IsTrue(['message' => 'Vous devez accepter les conditions générales']),
                 ],
+            ])
+            ->add('telephone', TextType::class, [
+                'label' => 'Téléphone',
+                'required' => true,
+                'attr' => [
+                    'maxlength' => 20,
+                    'placeholder' => 'Ex : 0601020304',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Veuillez saisir votre numéro de téléphone']),
+                ],
             ]);
     }
 }

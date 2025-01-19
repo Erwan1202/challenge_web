@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -32,6 +33,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "json")]
     private array $roles = [];
 
+    #[Assert\NotBlank(message: "Le numéro de téléphone est obligatoire.")]
+    #[Assert\Regex(
+        pattern: "/^\+?[0-9]{10,15}$/",
+        message: "Le numéro de téléphone doit être valide et contenir entre 10 et 15 chiffres."
+    )]
+
+    #[ORM\Column(length: 20, nullable: false, options: ["default" => "0000000000"])]
+    private ?string $telephone = null;
+    
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: CompteBancaire::class)]
     private Collection $comptes;
 
@@ -99,6 +109,17 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
         return $this;
     }
 

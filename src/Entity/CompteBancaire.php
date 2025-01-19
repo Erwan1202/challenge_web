@@ -17,7 +17,7 @@ class CompteBancaire
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: 'string', length: 20, unique: true)]
     private ?string $numero_de_compte = null;
 
     #[ORM\Column(length: 255)]
@@ -119,18 +119,18 @@ class CompteBancaire
     public function prePersistOperations(): void
     {
         $this->generateNumeroDeCompte();
-        $this->verifierRèglesGestion();
+        $this->validateRules();
     }
 
     private function generateNumeroDeCompte(): void
     {
-        $this->numero_de_compte = random_int(1000000000, 9999999999);
+        $this->numero_de_compte = (string) random_int(1000000000, 9999999999);
     }
 
-    private function verifierRèglesGestion(): void
+    private function validateRules(): void
     {
-        if ($this->type === 'épargne' && $this->solde < 10.0) {
-            throw new \Exception('Un compte épargne doit avoir un solde initial d’au moins 10€.');
+        if ($this->type === 'epargne' && $this->solde < 10.0) {
+            throw new \InvalidArgumentException('Un compte épargne doit avoir un solde initial d’au moins 10€.');
         }
 
         if ($this->type === 'courant') {

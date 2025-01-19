@@ -91,51 +91,46 @@ final class TransactionController extends AbstractController
     #[Route('/transaction/deposit', name: 'app_deposit')]
     public function deposit(Request $request, EntityManagerInterface $entityManager): Response
     {
-    // Créez une nouvelle transaction
-    $transaction = new Transaction();
-
-    // Création du formulaire en passant l'utilisateur connecté comme option
-    $form = $this->createForm(DepositFormType::class, $transaction, [
-        'user' => $this->getUser(), // Passe l'utilisateur connecté au formulaire
-    ]);
-
-    $form->handleRequest($request);
-
-    // Traitement du formulaire
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Validation : vérifier que le montant est positif
-        if ($transaction->getMontant() <= 0) {
-            $this->addFlash('error', 'Le montant doit être supérieur à 0.');
-            return $this->redirectToRoute('app_deposit');
-        }
-
-        // Définir le type de transaction comme dépôt
-        $transaction->setType(Transaction::TYPE_DEPOSIT);
-        $transaction->setDateHeure(new \DateTime());
-        $transaction->setStatut(Transaction::STATUS_SUCCESS);
-
-        // Mise à jour du solde du compte source
-        $compteSource = $transaction->getCompteSource();
-        if ($compteSource) {
-            $compteSource->setSolde($compteSource->getSolde() + $transaction->getMontant());
-        }
-
-        // Persister dans la base de données
-        $entityManager->persist($transaction);
-        $entityManager->persist($compteSource);
-        $entityManager->flush();
-
-        // Message de succès
-        $this->addFlash('success', 'Dépôt effectué avec succès.');
-        return $this->redirectToRoute('app_dashboard');
-    }
-
-    // Retourne la vue avec le formulaire
-    return $this->render('transaction/deposit.html.twig', [
-        'form' => $form->createView(),
-    ]);
+        $transaction = new Transaction();
     
+        $form = $this->createForm(DepositFormType::class, $transaction, [
+            'user' => $this->getUser(),
+        ]);
+    
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Validation du montant
+            if ($transaction->getMontant() <= 0) {
+                $this->addFlash('error', 'Le montant doit être supérieur à 0.');
+                return $this->redirectToRoute('app_deposit');
+            }
+    
+            // Définir le type, la date, et le statut
+            $transaction->setType(Transaction::TYPE_DEPOSIT); // Vérifiez que TYPE_DEPOSIT est 'deposit'
+            $transaction->setDateHeure(new \DateTime());
+            $transaction->setStatut(Transaction::STATUS_SUCCESS);
+    
+            // Récupérer et mettre à jour le solde du compte source
+            $compteSource = $transaction->getCompteSource();
+            if ($compteSource) {
+                $compteSource->setSolde($compteSource->getSolde() + $transaction->getMontant());
+            }
+    
+            // Sauvegarder dans la base de données
+            $entityManager->persist($transaction);
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'Dépôt effectué avec succès.');
+            return $this->redirectToRoute('app_dashboard');
+        }
+    
+        return $this->render('transaction/deposit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
+    
+
 
 
 

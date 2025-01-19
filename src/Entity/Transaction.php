@@ -27,6 +27,8 @@ class Transaction
     #[Assert\Choice(choices: [self::TYPE_DEPOSIT, self::TYPE_WITHDRAW, self::TYPE_TRANSFER], message: 'Type de transaction invalide.')]
     private ?string $type = null;
 
+
+
     #[ORM\Column]
     #[Assert\NotNull]
     #[Assert\Positive(message: 'Le montant doit être supérieur à 0.')]
