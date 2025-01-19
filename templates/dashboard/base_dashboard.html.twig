@@ -18,7 +18,7 @@
 
         {% block usersList %}{% endblock %}
 
-        <a href="" class="headerAccount">
+        <a href="{{ path('app_logout') }}" class="headerAccount">
             <img src="{{ asset('images/utilisateurClair.png') }}" alt="Profil">
             {# <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p> #}
             {# <p>{{ utilisateur.email }}</p> #}
