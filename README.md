@@ -41,9 +41,8 @@ Ensure you have the following installed on your system:
 3. **Set up environment variables: Copy the .env file to .env.local**:
     ```bash
     copy and paste the .env to .env.local and change :
+    DATABASE_URL="mysql://your_username:your_password@127.0.0.1:3306/bank" with your database information (msql for mysql or pgsql)
 
-
-DATABASE_URL="mysql://your_username:your_password@127.0.0.1:3306/bank" with your database information (msql for mysql or pgsql)
 
 
 4. **Set up the database: Run the following commands to create the database and apply migrations**:
