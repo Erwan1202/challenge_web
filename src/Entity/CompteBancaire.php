@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Utilisateur;
+use App\Entity\Transaction;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
@@ -29,6 +32,18 @@ class CompteBancaire
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'comptes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
+
+    #[ORM\OneToMany(mappedBy: 'compteSource', targetEntity: Transaction::class, cascade: ['remove'], orphanRemoval: true)]
+    private Collection $transactionsAsSource;
+
+    #[ORM\OneToMany(mappedBy: 'compteDestination', targetEntity: Transaction::class, cascade: ['remove'], orphanRemoval: true)]
+    private Collection $transactionsAsDestination;
+
+    public function __construct()
+    {
+        $this->transactionsAsSource = new ArrayCollection();
+        $this->transactionsAsDestination = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,32 +105,38 @@ class CompteBancaire
         return $this;
     }
 
-    #[ORM\PrePersist]
-    public function prePersistOperations(): void
+    public function getTransactionsAsSource(): Collection
     {
-        $this->generateNumeroDeCompte(); // Génère un numéro de compte unique
-        $this->verifierRèglesGestion(); // Vérifie les règles de gestion avant l'enregistrement
+        return $this->transactionsAsSource;
+    }
+
+    public function getTransactionsAsDestination(): Collection
+    {
+        return $this->transactionsAsDestination;
     }
 
     #[ORM\PrePersist]
-    public function generateNumeroDeCompte(): void
+    public function prePersistOperations(): void
+    {
+        $this->generateNumeroDeCompte();
+        $this->verifierRèglesGestion();
+    }
+
+    private function generateNumeroDeCompte(): void
     {
         $this->numero_de_compte = random_int(1000000000, 9999999999);
     }
 
-    
-
-
-    public function verifierRèglesGestion(): void
+    private function verifierRèglesGestion(): void
     {
         if ($this->type === 'épargne' && $this->solde < 10.0) {
             throw new \Exception('Un compte épargne doit avoir un solde initial d’au moins 10€.');
         }
 
         if ($this->type === 'courant') {
-            $this->decouvertAutorise = 400.0; // Définir un découvert fixe pour les comptes courants
+            $this->decouvertAutorise = 400.0;
         } else {
-            $this->decouvertAutorise = null; // Pas de découvert pour les autres types
+            $this->decouvertAutorise = null;
         }
     }
 }

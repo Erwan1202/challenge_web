@@ -12,7 +12,14 @@
                     <p>Numéro de compte : {{ compte.numeroDeCompte }}</p>
                     <p>Type : {{ compte.type }}</p>
                     <p>Solde : {{ compte.solde }} €</p>
+                    <form method="post" action="{{ path('app_dashboard_delete', { id: compte.id }) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce compte ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ compte.id) }}">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
                 </div>
+                <hr>
+            {% else %}
+                <p>Aucun compte trouvé.</p>
             {% endfor %}
             <a href="{{ path('app_add_compte') }}" class="btn">+ Ajouter un compte</a>
         </div>

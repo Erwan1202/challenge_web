@@ -41,12 +41,12 @@ class Transaction
     #[Assert\Choice(choices: [self::STATUS_SUCCESS, self::STATUS_FAILED], message: 'Statut invalide.')]
     private ?string $statut = null;
 
-    #[ORM\ManyToOne(targetEntity: CompteBancaire::class)]
-    #[ORM\JoinColumn(nullable: true)] // Peut-être null pour certaines transactions
+    #[ORM\ManyToOne(targetEntity: CompteBancaire::class, inversedBy: 'transactionsAsSource')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?CompteBancaire $compteSource = null;
 
-    #[ORM\ManyToOne(targetEntity: CompteBancaire::class)]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: CompteBancaire::class, inversedBy: 'transactionsAsDestination')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?CompteBancaire $compteDestination = null;
 
     public function getId(): ?int
