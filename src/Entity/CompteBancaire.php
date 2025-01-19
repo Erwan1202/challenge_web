@@ -41,7 +41,7 @@ class CompteBancaire
 
     public function __construct()
     {
-        $this->numero_de_compte = $this->generateNumeroDeCompte();
+        $this->numeroDeCompte = $this->generateNumeroDeCompte();
         $this->transactionsAsSource = new ArrayCollection();
         $this->transactionsAsDestination = new ArrayCollection();
     }
