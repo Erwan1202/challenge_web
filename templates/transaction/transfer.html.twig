@@ -7,14 +7,14 @@
 <ul>
     {% for transaction in transactions %}
         <li>
-            <a href="{{ path('app_transaction_show', { id: transaction.id }) }}">
+    <form action="{{ path('app_transaction_new') }}" method="post">
                 {{ transaction.label }} - {{ transaction.amount }}€
             </a>
         </li>
     {% endfor %}
 </ul>
 <a href="{{ path('app_transaction_new') }}">Créer une nouvelle transaction</a>
-<form action="{{ path('app_transaction') }}" method="post">
+<form action="{{ path('app_transaction_new') }}" method="post">
     <!-- Form content here -->
 </form>
 {% endblock %}
