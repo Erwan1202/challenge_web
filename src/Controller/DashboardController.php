@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\CompteBancaire;
+use App\Entity\Utilisateur;
 use App\Repository\CompteBancaireRepository;
 use App\Repository\TransactionRepository;
+use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +19,8 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(
         CompteBancaireRepository $compteBancaireRepository,
-        TransactionRepository $transactionRepository
+        TransactionRepository $transactionRepository,
+        UtilisateurRepository $utilisateurRepository // Ajoutez ce repository pour récupérer les utilisateurs
     ): Response {
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
@@ -27,7 +30,20 @@ class DashboardController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        // Récupérer les comptes bancaires de l'utilisateur
+        // Vérifier les rôles de l'utilisateur pour rediriger
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            // Si l'utilisateur est admin, afficher le tableau de bord admin
+            $users = $utilisateurRepository->findAll(); // Récupérer tous les utilisateurs
+
+            return $this->render('dashboard/admin_dashboard.html.twig', [
+                'user' => $user,
+                'comptes' => $compteBancaireRepository->findAll(), // Afficher tous les comptes pour un admin
+                'transactions' => $transactionRepository->findBy([], ['dateHeure' => 'DESC'], 5),
+                'users' => $users, // Passer la variable users à la vue
+            ]);
+        }
+
+        // Si l'utilisateur est un client (ROLE_CLIENT), afficher le tableau de bord utilisateur
         $comptes = $compteBancaireRepository->findBy(['utilisateur' => $user]);
 
         // Récupérer les transactions des comptes de l'utilisateur ou les transactions de virement où l'utilisateur est le destinataire
@@ -39,7 +55,7 @@ class DashboardController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        // Rendre la vue du tableau de bord
+        // Afficher le tableau de bord utilisateur
         return $this->render('dashboard/user_dashboard.html.twig', [
             'user' => $user,
             'comptes' => $comptes,

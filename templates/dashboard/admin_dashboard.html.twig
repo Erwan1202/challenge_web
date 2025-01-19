@@ -17,20 +17,21 @@
 {% endblock %}
 
 {% block usersList %}
-
-    {# ajouter un foreach ici #}
     <div class="userAccountsList">
-        <a href="" class="userAccountsItem">
-            <div>
-                <p>Nom</p> {# ajouter informations dynamiques #}
-                <p>Prénom</p>
-            </div>
-            <div>
-                <p>Email</p>
-                <p>0123456789</p>
-            </div>
-        </a>
-
+        {% for user in users %}
+            <a href="" class="userAccountsItem">
+                <div>
+                    <p>{{ user.nom }}</p> {# Affiche le nom de l'utilisateur #}
+                    <p>{{ user.prenom }}</p> {# Affiche le prénom de l'utilisateur #}
+                </div>
+                <div>
+                    <p>{{ user.email }}</p> {# Affiche l'email de l'utilisateur #}
+                    <p>{{ user.telephone }}</p> {# Affiche le téléphone de l'utilisateur #}
+                </div>
+            </a>
+        {% else %}
+            <p>Aucun utilisateur trouvé.</p> {# Message si aucun utilisateur #}
+        {% endfor %}
     </div>
 {% endblock %}
 
@@ -40,19 +41,20 @@
     <div class="accountsListContainer" id="accounts">
         <h2>Mes comptes</h2>    
         <div class="accountsList">
-
-            {# ajouter un foreach ici #}
-            <div class="accountsItem">
-                <div>
+            {% for compte in comptes %}
+                <div class="accountsItem">
                     <div>
-                        <h3>0123456789</h3> {# ajouter informations dynamiques #}
-                        <p>Type de compte</p>
+                        <div>
+                            <h3>{{ compte.numeroDeCompte }}</h3> {# Affiche le numéro du compte #}
+                            <p>{{ compte.type }}</p> {# Affiche le type de compte (épargne, courant...) #}
+                        </div>
+                        <a href=""><img src="{{ asset('images/cadena.png') }}" alt="Bloquer"></a> {# Bouton pour bloquer le compte #}
                     </div>
-                    <a href=""><img src="{{ asset('images/cadena.png') }}" alt="Bloquer"></a>
+                    <p>{{ compte.solde }} €</p> {# Affiche le solde du compte #}
                 </div>
-                <p>1000 €</p> 
-            </div>
-
+            {% else %}
+                <p>Aucun compte trouvé.</p> {# Message si aucun compte trouvé #}
+            {% endfor %}
             <a href="" class="accountsItemAdd">
                 <img src="{{ asset('images/ajouter.png') }}" alt="Ajouter">
                 <p>Ajouter un compte</p>
@@ -82,15 +84,19 @@
         <div class="transactionsHistory">
             <h2>Historique des transactions</h2>
             <div class="transactionsHistoryList">
-                <div class="transactionsHistoryItem">
-                    <div>
-                        <p>15/01/2025 15:15</p> {# ajouter informations dynamiques #}
-                        <p>Type</p>
-                        <p>Statut</p>
+                {% for transaction in transactions %}
+                    <div class="transactionsHistoryItem">
+                        <div>
+                            <p>{{ transaction.dateHeure|date('d/m/Y H:i') }}</p> {# Affiche la date et l'heure de la transaction #}
+                            <p>{{ transaction.type }}</p> {# Affiche le type de la transaction #}
+                            <p>{{ transaction.statut }}</p> {# Affiche le statut de la transaction #}
+                        </div>
+                        <p>{{ transaction.montant }} €</p> {# Affiche le montant de la transaction #}
+                        <a href=""><img src="{{ asset('images/croix.png') }}" alt="Annuler la transaction"></a> {# Bouton pour annuler la transaction #}
                     </div>
-                    <p>1000 €</p>
-                    <a href=""><img src="{{ asset('images/croix.png') }}" alt="Annuler la transaction"></a>
-                </div>
+                {% else %}
+                    <p>Aucune transaction trouvée.</p> {# Message si aucune transaction trouvée #}
+                {% endfor %}
             </div>
         </div>
     </div>
