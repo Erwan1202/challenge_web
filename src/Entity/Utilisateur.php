@@ -26,7 +26,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(name: "mdp_chiffre", type: "text")]
     private ?string $password = null;
 
     #[ORM\Column(type: "json")]
