@@ -16,45 +16,42 @@ class DepositFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // Vérification que l'option 'user' est passée
-        if (!isset($options['user'])) {
-            throw new \InvalidArgumentException('The "user" option is mandatory');
+        // Vérifiez que l'utilisateur est passé comme option
+        if (!array_key_exists('user', $options) || !$options['user']) {
+            throw new \InvalidArgumentException('L\'option "user" est obligatoire et doit être définie.');
         }
 
         $builder
-            ->add('compteSource', EntityType::class, [
-                'class' => CompteBancaire::class,
-                'query_builder' => function (EntityRepository $er) use ($options) {
-                    // Limite les comptes affichés à ceux de l'utilisateur connecté
-                    return $er->createQueryBuilder('cb')
-                        ->where('cb.utilisateur = :user')
-                        ->setParameter('user', $options['user']);
-                },
-                'choice_label' => 'numeroDeCompte', // Affiche le numéro de compte dans le formulaire
-                'label' => 'Compte à créditer',
-                'required' => true, // Le compte source est requis pour un dépôt
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('montant', MoneyType::class, [
-                'currency' => 'EUR', // Monnaie pour le champ
-                'label' => 'Montant à déposer',
-                'required' => true,
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Effectuer le dépôt',
-                'attr' => ['class' => 'btn btn-primary mt-3'],
-            ]);
+        ->add('compteSource', EntityType::class, [
+            'class' => CompteBancaire::class,
+            'query_builder' => function (EntityRepository $er) use ($options) {
+                return $er->createQueryBuilder('cb')
+                    ->where('cb.utilisateur = :user')
+                    ->setParameter('user', $options['user']);
+            },
+            'choice_label' => 'numeroDeCompte',
+            'label' => 'Compte à créditer',
+        ])
+    
+        ->add('montant', MoneyType::class, [
+            'currency' => 'EUR',
+            'label' => 'Montant à déposer',
+        ])
+        ->add('submit', SubmitType::class, [
+            'label' => 'Effectuer le dépôt',
+        ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Transaction::class, // Lier le formulaire à l'entité Transaction
-            'user' => null, // Option personnalisée pour passer l'utilisateur
+            'user' => null, // Option obligatoire pour passer l'utilisateur
         ]);
 
-        // Ajout d'une option 'user' pour l'utilisateur connecté
+        // Définir 'user' comme option requise
         $resolver->setRequired(['user']);
+        $resolver->setAllowedTypes('user', ['App\Entity\Utilisateur', 'null']);
     }
 }

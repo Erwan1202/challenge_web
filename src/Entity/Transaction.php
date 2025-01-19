@@ -59,10 +59,9 @@ class Transaction
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(string $type): self
     {
         $this->type = $type;
-
         return $this;
     }
 
@@ -71,10 +70,9 @@ class Transaction
         return $this->montant;
     }
 
-    public function setMontant(float $montant): static
+    public function setMontant(float $montant): self
     {
         $this->montant = $montant;
-
         return $this;
     }
 
@@ -83,10 +81,9 @@ class Transaction
         return $this->dateHeure;
     }
 
-    public function setDateHeure(\DateTimeInterface $dateHeure): static
+    public function setDateHeure(\DateTimeInterface $dateHeure): self
     {
         $this->dateHeure = $dateHeure;
-
         return $this;
     }
 
@@ -95,10 +92,9 @@ class Transaction
         return $this->statut;
     }
 
-    public function setStatut(string $statut): static
+    public function setStatut(string $statut): self
     {
         $this->statut = $statut;
-
         return $this;
     }
 
@@ -107,10 +103,9 @@ class Transaction
         return $this->compteSource;
     }
 
-    public function setCompteSource(?CompteBancaire $compteSource): static
+    public function setCompteSource(?CompteBancaire $compteSource): self
     {
         $this->compteSource = $compteSource;
-
         return $this;
     }
 
@@ -119,10 +114,9 @@ class Transaction
         return $this->compteDestination;
     }
 
-    public function setCompteDestination(?CompteBancaire $compteDestination): static
+    public function setCompteDestination(?CompteBancaire $compteDestination): self
     {
         $this->compteDestination = $compteDestination;
-
         return $this;
     }
 }

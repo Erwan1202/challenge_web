@@ -7,14 +7,16 @@
 <ul>
     {% for transaction in transactions %}
         <li>
-    <form action="{{ path('app_transaction_new') }}" method="post">
-                {{ transaction.label }} - {{ transaction.amount }}€
-            </a>
+            {{ transaction.id }} : {{ transaction.type }} - {{ transaction.montant }}€
         </li>
     {% endfor %}
 </ul>
-<a href="{{ path('app_transaction_new') }}">Créer une nouvelle transaction</a>
-<form action="{{ path('app_transaction_new') }}" method="post">
-    <!-- Form content here -->
-</form>
+
+<h2>Effectuer un transfert</h2>
+{{ form_start(form) }}
+    {{ form_row(form.compteSource) }}
+    {{ form_row(form.compteDestination) }}
+    {{ form_row(form.montant) }}
+    <button type="submit" class="btn btn-primary">Transférer</button>
+{{ form_end(form) }}
 {% endblock %}
