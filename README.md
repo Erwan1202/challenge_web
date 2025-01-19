@@ -39,9 +39,8 @@ Ensure you have the following installed on your system:
 
 
 3. **Set up environment variables: Copy the .env file to .env.local**:
-
-
-copy and paste the .env to .env.local and change :
+    ```bash
+    copy and paste the .env to .env.local and change :
 
 
 DATABASE_URL="mysql://your_username:your_password@127.0.0.1:3306/bank" with your database information (msql for mysql or pgsql)
