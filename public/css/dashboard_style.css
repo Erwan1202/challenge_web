@@ -53,6 +53,21 @@ button:active {
 
 
 
+/* CSS pour les flash alert •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.alert {
+    margin: 0;
+    padding: 5px 10px;
+    list-style: none;
+    font-weight: 300;
+    background-color: rgba(250, 250, 250, 0.75);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+
 /* CSS pour le header •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
 
 header {
@@ -208,7 +223,7 @@ main h1 {
     display: none;
 }
 
-.accountsItem, .accountsItemAdd {
+.accountsItem, .accountsItemAdd, .accountsItemNotFound {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -228,27 +243,39 @@ main h1 {
 .accountsItem h3, .accountsItem p {
     margin: 0;
 }
-.accountsItem > div:nth-child(1) {
+.accountsItem > div {
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
 }
-.accountsItem > div:nth-child(1) > div > p {
+.accountsItem > div > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.accountsItem > div > div > p {
     font-weight: 300;
 }
-.accountsItem > div:nth-child(1) > a {
-    text-decoration: none;
+.accountsItem > div > form {
+    margin: 0;
 }
-.accountsItem > div:nth-child(1) > a > img {
+.accountsItem > div > form > button {
+    padding: 0;
+    background-color: transparent;
+}
+.accountsItem > div > form > button > img, .accountsItem > div > a > img {
     width: 25px;
     height: auto;
+}
+.accountsItem > div > a {
+    text-decoration: none;
 }
 .accountsItem > p {
     font-size: 30px;
 }
 
-.accountsItemAdd {
+.accountsItemAdd, .accountsItemNotFound {
     background-color: transparent;
     border: 1px solid var(--accent-color3);
     text-decoration: none;
@@ -256,7 +283,7 @@ main h1 {
     font-size: 20px;
     font-weight: 300;
 }
-.accountsItemAdd img {
+.accountsItemAdd img, .accountsItemNotFound img {
     width: 50px;
     height: auto;
 }

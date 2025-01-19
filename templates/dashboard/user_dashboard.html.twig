@@ -19,25 +19,35 @@
     </nav>
 {% endblock %}
 
-{% block dashboard_title %}Tableau de bord Utilisateur{% endblock %}
+{% block dashboard_title %}Bienvenue {{ app.user.nom }} {{ app.user.prenom }}{% endblock %}
 
 {% block dashboard_content %}
     <div class="accountsListContainer" id="accounts">
         <h2>Mes comptes</h2>    
         <div class="accountsList">
-
-            {# ajouter un foreach ici #}
-            <div class="accountsItem">
-                <div>
+            {% for compte in comptes %}
+                <div class="accountsItem">
                     <div>
-                        <h3>0123456789</h3> {# ajouter informations dynamiques #}
-                        <p>Type de compte</p>
+                        <div>
+                            <h3>{{ compte.numeroDeCompte }}</h3>
+                            <p>{{ compte.type }}</p>
+                        </div>
+                        <form method="post" action="{{ path('app_dashboard_delete', { id: compte.id }) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce compte ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ compte.id) }}">
+                            <button type="submit" class="btn btn-danger">
+                                <img src="{{ asset('images/croix.png') }}" alt="Supprimer"/>
+                            </button>
+                        </form>
                     </div>
+                    <p>{{ compte.solde }} €</p>
                 </div>
-                <p>1000 €</p>
-            </div>
-
-            <a href="" class="accountsItemAdd">
+            {% else %}
+                <div class="accountsItemNotFound">
+                    <img src="{{ asset('images/croix.png') }}" alt="Aucun compte trouvé">
+                    <p>Aucun compte trouvé</p>
+                </div>
+            {% endfor %}
+            <a href="{{ path('app_add_compte') }}" class="accountsItemAdd">
                 <img src="{{ asset('images/ajouter.png') }}" alt="Ajouter">
                 <p>Ajouter un compte</p>
             </a>
@@ -48,15 +58,15 @@
         <div class="transactionsActions">
             <h2>Transactions</h2>
             <div class="transactionsActionsList">
-                <a href="" class="transactionsActionsLinks">
+                <a href="{{ path('app_deposit') }}" class="transactionsActionsLinks">
                     <img src="{{ asset('images/carteClair.png') }}" alt="Dépôt">
                     <p>Dépôt</p>
                 </a>
-                <a href="" class="transactionsActionsLinks">
+                <a href="{{ path('app_withdraw') }}" class="transactionsActionsLinks">
                     <img src="{{ asset('images/carteClair.png') }}" alt="Retrait">
                     <p>Retrait</p>
                 </a>
-                <a href="" class="transactionsActionsLinks">
+                <a href="{{ path('app_transfer') }}" class="transactionsActionsLinks">
                     <img src="{{ asset('images/carteClair.png') }}" alt="Virement">
                     <p>Virement</p>
                 </a>
@@ -66,14 +76,20 @@
         <div class="transactionsHistory">
             <h2>Historique des transactions</h2>
             <div class="transactionsHistoryList">
-                <div class="transactionsHistoryItem">
-                    <div>
-                        <p>15/01/2025 15:15</p> {# ajouter informations dynamiques #}
-                        <p>Type</p>
-                        <p>Statut</p>
+                {% for transaction in transactions %}
+                    <div class="transactionsHistoryItem">
+                        <div>
+                            <p>{{ transaction.dateHeure|date('d/m/Y H:i') }}</p> {# ajouter informations dynamiques #}
+                            <p>{{ transaction.type }}</p>
+                            <p>{{ transaction.statut }}</p>
+                        </div>
+                        <p>{{ transaction.montant }} €</p>
                     </div>
-                    <p>1000 €</p>
-                </div>
+                {% else %}
+                    <div class="transactionsHistoryItem">
+                        <p>Aucune transaction trouvée.</p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

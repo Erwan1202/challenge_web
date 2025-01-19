@@ -32,7 +32,7 @@ class DashboardController extends AbstractController
         $transactions = $transactionRepository->findBy([], ['dateHeure' => 'DESC'], 5);
 
         // Rendre la vue du tableau de bord
-        return $this->render('dashboard/index.html.twig', [
+        return $this->render('dashboard/user_dashboard.html.twig', [
             'user' => $user,
             'comptes' => $comptes,
             'transactions' => $transactions,
