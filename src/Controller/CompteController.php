@@ -23,6 +23,7 @@ public function addCompte(Request $request, EntityManagerInterface $entityManage
     // Vérifier si l'utilisateur a déjà atteint la limite de 5 comptes
     $existingAccounts = $user->getComptes()->count();
     if ($existingAccounts >= 5) {
+        // Ajouter un message flash pour informer l'utilisateur
         $this->addFlash('error', 'Vous ne pouvez pas créer plus de 5 comptes bancaires.');
         return $this->redirectToRoute('app_dashboard');
     }

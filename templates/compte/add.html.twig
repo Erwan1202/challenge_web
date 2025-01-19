@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Ajouter un compte bancaire</h1>
+    <h1>Créer un nouveau compte bancaire</h1>
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button type="submit" class="btn">Ajouter le compte</button>
+        <button type="submit" class="btn btn-primary">Créer</button>
     {{ form_end(form) }}
 {% endblock %}
