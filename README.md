@@ -35,7 +35,6 @@ Ensure you have the following installed on your system:
 
 
 2. **Install PHP dependencies**:
-
     ```bash
 composer install
 
@@ -49,15 +48,12 @@ DATABASE_URL="mysql://your_username:your_password@127.0.0.1:3306/bank" with your
 
 
 4. **Set up the database: Run the following commands to create the database and apply migrations**:
-
-
     ```bash
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 
 
 5. **Run the development server: Start the Symfony development server**:
-
     ```bash
 symfony server:start
 
