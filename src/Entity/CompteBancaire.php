@@ -41,6 +41,7 @@ class CompteBancaire
 
     public function __construct()
     {
+        $this->numero_de_compte = $this->generateNumeroDeCompte();
         $this->transactionsAsSource = new ArrayCollection();
         $this->transactionsAsDestination = new ArrayCollection();
     }
@@ -122,9 +123,9 @@ class CompteBancaire
         $this->verifierRèglesGestion();
     }
 
-    private function generateNumeroDeCompte(): void
+    private function generateNumeroDeCompte(): string
     {
-        $this->numero_de_compte = random_int(1000000000, 9999999999);
+        return bin2hex(random_bytes(5)); // 10 caractères hexadécimaux
     }
 
     private function verifierRèglesGestion(): void
@@ -136,7 +137,7 @@ class CompteBancaire
         if ($this->type === 'courant') {
             $this->decouvertAutorise = 400.0;
         } else {
-            $this->decouvertAutorise = null;
+            $this->decouvertAutorise = 0;
         }
     }
 }

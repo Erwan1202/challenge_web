@@ -22,21 +22,26 @@
             </div>
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <a href="{{ path('app_dashboard') }}" class="headerAccount">
-            🧔 Mon Compte
-        </a>
-    {% else %}
-        <a href="{{ path('app_login') }}" class="headerAccount">
-            🧔 Connexion
-        </a>
-{% endif %}
-
-
-
+                <a href="{{ path('app_dashboard') }}" class="headerAccount">
+                    🧔 Mon compte
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="headerAccount">
+                    🧔 Connexion
+                </a>
+            {% endif %}
         </div>
     </header>
 
     <main>
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label }}">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
 
         <div class="contactContainer" id="contact">

@@ -51,6 +51,21 @@ button:active, .heroContainer div a:active {
 
 
 
+/* CSS pour les flash alert •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+
+.alert {
+    margin: 0;
+    padding: 5px 10px;
+    list-style: none;
+    font-weight: 300;
+    background-color: rgba(250, 250, 250, 0.75);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+
 /* CSS pour le header •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
 
 header {
