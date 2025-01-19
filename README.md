@@ -36,7 +36,7 @@ Ensure you have the following installed on your system:
 
 2. **Install PHP dependencies**:
 
-
+```bash
 composer install
 
 3. **Set up environment variables: Copy the .env file to .env.local**:
