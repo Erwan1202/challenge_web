@@ -17,14 +17,14 @@ class CompteBancaire
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 20)]
-    private ?string $numero_de_compte = null;
+    #[ORM\Column(type: 'string', length: 20, unique: true)]
+    private ?string $numeroDeCompte = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\Column]
-    private ?float $solde = null;
+    private ?float $solde = 0.0;
 
     #[ORM\Column(nullable: true)]
     private ?float $decouvertAutorise = null;
@@ -52,12 +52,12 @@ class CompteBancaire
 
     public function getNumeroDeCompte(): ?string
     {
-        return $this->numero_de_compte;
+        return $this->numeroDeCompte;
     }
 
-    public function setNumeroDeCompte(string $numero_de_compte): self
+    public function setNumeroDeCompte(string $numeroDeCompte): self
     {
-        $this->numero_de_compte = $numero_de_compte;
+        $this->numeroDeCompte = $numeroDeCompte;
         return $this;
     }
 
@@ -119,20 +119,24 @@ class CompteBancaire
     public function prePersistOperations(): void
     {
         $this->generateNumeroDeCompte();
-        $this->verifierRèglesGestion();
+        $this->validateRules();
     }
 
     private function generateNumeroDeCompte(): void
     {
-        $this->numero_de_compte = random_int(1000000000, 9999999999);
+        if ($this->numeroDeCompte === null) {
+            $this->numeroDeCompte = (string) random_int(1000000000, 9999999999);
+        }
     }
 
-    private function verifierRèglesGestion(): void
+    private function validateRules(): void
     {
-        if ($this->type === 'épargne' && $this->solde < 10.0) {
-            throw new \Exception('Un compte épargne doit avoir un solde initial d’au moins 10€.');
+        // Validation pour les comptes épargne
+        if ($this->type === 'epargne' && $this->solde < 10.0) {
+            throw new \InvalidArgumentException('Un compte épargne doit avoir un solde initial d’au moins 10€.');
         }
 
+        // Définir le découvert autorisé pour les comptes courants
         if ($this->type === 'courant') {
             $this->decouvertAutorise = 400.0;
         } else {

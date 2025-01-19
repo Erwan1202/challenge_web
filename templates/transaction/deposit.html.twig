@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dépôt{% endblock %}
+{% block title %}Effectuer un dépôt{% endblock %}
 
 {% block body %}
     <h1>Effectuer un dépôt</h1>
-
     {{ form_start(form) }}
         {{ form_row(form.compteSource) }}
         {{ form_row(form.montant) }}
-        <button class="btn btn-primary">Déposer</button>
+        {{ form_row(form.submit) }}
     {{ form_end(form) }}
 {% endblock %}
