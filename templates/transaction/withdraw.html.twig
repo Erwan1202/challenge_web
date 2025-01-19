@@ -3,17 +3,19 @@
 {% block title %}Retrait d'Argent{% endblock %}
 
 {% block body %}
-<h1>Retirer de l'Argent du Compte</h1>
+    <div class="withdrawContainer">
+        <div class="withdrawFormContainer">
+            <h1>Retirer de l'Argent du Compte</h1>
+            <form action="{{ path('app_withdraw') }}" method="post">
+                {{ form_start(form) }}
+                
+                {{ form_row(form.compteSource) }}  {# Affichez le champ pour sélectionner un compte source #}
+                {{ form_row(form.montant) }}       {# Affichez le champ pour le montant #}
 
-<form action="{{ path('app_withdraw') }}" method="post">
-    {{ form_start(form) }}
-    
-    {{ form_row(form.compteSource) }}  {# Affichez le champ pour sélectionner un compte source #}
-    {{ form_row(form.montant) }}       {# Affichez le champ pour le montant #}
-
-    <button type="submit">Retirer</button>
-    
-    {{ form_end(form) }}
-</form>
-
+                <button type="submit">Retirer</button>
+                
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </div>
 {% endblock %}

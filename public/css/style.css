@@ -272,14 +272,14 @@ main {
 
 
 
-/* CSS pour le formulaire d'inscription, de connexion, de création de compte bancaire •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
+/* CSS pour le formulaire d'inscription, de connexion, de création de compte bancaire et de transaction •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
 
-.registerContainer, .loginContainer, .addBankAccountContainer {
+.registerContainer, .loginContainer, .addBankAccountContainer, .depositContainer, .withdrawContainer, .transferContainer {
     display: flex;
     justify-content: center;
 }
 
-.registerFormContainer, .loginFormContainer, .addBankAccountFormContainer {
+.registerFormContainer, .loginFormContainer, .addBankAccountFormContainer, .depositFormContainer, .withdrawFormContainer, .transferFormContainer {
     display: flex;
     flex-direction: column;
     width: 30vw;
@@ -291,32 +291,32 @@ main {
     -webkit-backdrop-filter: blur(20px);
 }
 
-.registerFormContainer h1, .loginFormContainer h1, .addBankAccountFormContainer h1 {
+.registerFormContainer h1, .loginFormContainer h1, .addBankAccountFormContainer h1, .depositFormContainer h1, .withdrawFormContainer h1, .transferFormContainer h1 {
     text-align: center;
     margin: 0;
 }
 
-.registerFormContainer form, .loginFormContainer form, .addBankAccountFormContainer form, .addBankAccountFormContainer div {
+.registerFormContainer form, .loginFormContainer form, .addBankAccountFormContainer form, .addBankAccountFormContainer div, .depositFormContainer form, .withdrawFormContainer form, .transferFormContainer form {
     display: flex;
     flex-direction: column;
     margin: 0;
     gap: 10px;
 }
 
-.registerFormContainer div, .loginFormContainer div, .addBankAccountFormContainer div div {
+.registerFormContainer form div, .loginFormContainer form div, .addBankAccountFormContainer form div div, .depositFormContainer form div, .withdrawFormContainer form div, .transferFormContainer form div {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-.registerFormContainer div label, .loginFormContainer div label, .addBankAccountFormContainer div div label {
+.registerFormContainer form div label, .loginFormContainer form div label, .addBankAccountFormContainer form div div label, .depositFormContainer form div label, .withdrawFormContainer form div label, .transferFormContainer form div label {
     font-weight: 500;
 }
-.registerFormContainer div input, .loginFormContainer div input, .addBankAccountFormContainer div div input, .addBankAccountFormContainer div div select {
+.registerFormContainer form div input, .loginFormContainer form div input, .addBankAccountFormContainer form div div input, .addBankAccountFormContainer form div div select, .depositFormContainer form div input, .depositFormContainer form div select, .withdrawFormContainer form div input, .withdrawFormContainer form div select, .transferFormContainer form div input, .transferFormContainer form div select {
     border: 1px solid var(--border-color1);
     border-radius: 10px;
     padding: 10px;
 }
-.registerFormContainer div ul, .loginFormContainer .alert-danger, .addBankAccountFormContainer div div ul {
+.registerFormContainer form div ul, .loginFormContainer .alert-danger, .addBankAccountFormContainer form div div ul, .depositFormContainer form div ul, .withdrawFormContainer form div ul, .transferFormContainer form div ul {
     margin: 0;
     padding: 5px 10px;
     list-style: none;
@@ -325,12 +325,12 @@ main {
     border-radius: 10px;
 }
 
-.registerFormContainer div:last-of-type, .loginFormContainer div:last-of-type {
+.registerFormContainer form div:last-of-type, .loginFormContainer form div:last-of-type {
     flex-direction: row;
     gap: 5px;
 }
 
-.registerFormContainer button, .loginFormContainer button, .addBankAccountFormContainer button {
+.registerFormContainer button, .loginFormContainer button, .addBankAccountFormContainer button, .depositFormContainer button, .withdrawFormContainer button, .transferFormContainer button {
     margin-top: 20px;
     border-radius: 50px;
 }

@@ -19,7 +19,7 @@
 {% block usersList %}
     <div class="userAccountsList">
         {% for user in users %}
-            <a href="" class="userAccountsItem">
+            <a href="#" class="userAccountsItem" data-user-id="{{ user.id }}">
                 <div>
                     <p>{{ user.nom }}</p> {# Affiche le nom de l'utilisateur #}
                     <p>{{ user.prenom }}</p> {# Affiche le prénom de l'utilisateur #}
@@ -40,25 +40,8 @@
 {% block dashboard_content %}
     <div class="accountsListContainer" id="accounts">
         <h2>Mes comptes</h2>    
-        <div class="accountsList">
-            {% for compte in comptes %}
-                <div class="accountsItem">
-                    <div>
-                        <div>
-                            <h3>{{ compte.numeroDeCompte }}</h3> {# Affiche le numéro du compte #}
-                            <p>{{ compte.type }}</p> {# Affiche le type de compte (épargne, courant...) #}
-                        </div>
-                        <a href=""><img src="{{ asset('images/cadena.png') }}" alt="Bloquer"></a> {# Bouton pour bloquer le compte #}
-                    </div>
-                    <p>{{ compte.solde }} €</p> {# Affiche le solde du compte #}
-                </div>
-            {% else %}
-                <p>Aucun compte trouvé.</p> {# Message si aucun compte trouvé #}
-            {% endfor %}
-            <a href="" class="accountsItemAdd">
-                <img src="{{ asset('images/ajouter.png') }}" alt="Ajouter">
-                <p>Ajouter un compte</p>
-            </a>
+        <div class="accountsList" id="accountsList">
+            <!-- La liste des comptes sera générée dynamiquement ici -->
         </div>
     </div>
 
@@ -66,15 +49,15 @@
         <div class="transactionsActions">
             <h2>Transactions</h2>
             <div class="transactionsActionsList">
-                <a href="" class="transactionsActionsLinks">
+                <a href="#" class="transactionsActionsLinks" data-action="deposit">
                     <img src="{{ asset('images/carteClair.png') }}" alt="Dépôt">
                     <p>Dépôt</p>
                 </a>
-                <a href="" class="transactionsActionsLinks">
+                <a href="#" class="transactionsActionsLinks" data-action="withdraw">
                     <img src="{{ asset('images/carteClair.png') }}" alt="Retrait">
                     <p>Retrait</p>
                 </a>
-                <a href="" class="transactionsActionsLinks">
+                <a href="#" class="transactionsActionsLinks" data-action="transfer">
                     <img src="{{ asset('images/carteClair.png') }}" alt="Virement">
                     <p>Virement</p>
                 </a>
@@ -83,22 +66,26 @@
 
         <div class="transactionsHistory">
             <h2>Historique des transactions</h2>
-            <div class="transactionsHistoryList">
-                {% for transaction in transactions %}
-                    <div class="transactionsHistoryItem">
-                        <div>
-                            <p>{{ transaction.dateHeure|date('d/m/Y H:i') }}</p> {# Affiche la date et l'heure de la transaction #}
-                            <p>{{ transaction.type }}</p> {# Affiche le type de la transaction #}
-                            <p>{{ transaction.statut }}</p> {# Affiche le statut de la transaction #}
-                        </div>
-                        <p>{{ transaction.montant }} €</p> {# Affiche le montant de la transaction #}
-                        <a href=""><img src="{{ asset('images/croix.png') }}" alt="Annuler la transaction"></a> {# Bouton pour annuler la transaction #}
-                    </div>
-                {% else %}
-                    <p>Aucune transaction trouvée.</p> {# Message si aucune transaction trouvée #}
-                {% endfor %}
+            <div class="transactionsHistoryList" id="transactionsList">
+                <!-- Les transactions seront générées dynamiquement ici -->
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block javascript %}
+    <script src="{{ asset('javascript/admin_dashboard.js') }}"></script>
+    <script>
+        const assetPaths = {
+            'cadeau': '{{ asset('images/cadena.png') }}',
+            'croix': '{{ asset('images/croix.png') }}',
+            'ajouter': '{{ asset('images/ajouter.png') }}'
+        };
+
+        // Passer l'URL de suppression à JavaScript
+        const deleteAccountUrl = "{{ path('app_dashboard_delete', { 'id': '__id__' }) }}"; // Modèle d'URL à utiliser pour la suppression
+
+        // Passer le token CSRF à JavaScript
+        const csrfToken = "{{ csrf_token('delete') }}";
+    </script>
 {% endblock %}

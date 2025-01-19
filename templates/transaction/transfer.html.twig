@@ -3,13 +3,15 @@
 {% block title %}Transactions{% endblock %}
 
 {% block body %}
-
-<h1>Effectuer un transfert</h1>
-{{ form_start(form) }}
-    {{ form_row(form.compteSource) }}
-    {{ form_row(form.compteDestination) }}
-    {{ form_row(form.montant) }}
-    <button type="submit" class="btn btn-primary">Transférer</button>
-{{ form_end(form) }}
-
+    <div class="transferContainer">
+        <div class="transferFormContainer">
+            <h1>Effectuer un transfert</h1>
+            {{ form_start(form) }}
+                {{ form_row(form.compteSource) }}
+                {{ form_row(form.compteDestination) }}
+                {{ form_row(form.montant) }}
+                <button type="submit" class="btn btn-primary">Transférer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

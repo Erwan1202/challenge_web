@@ -3,10 +3,14 @@
 {% block title %}Effectuer un dépôt{% endblock %}
 
 {% block body %}
-    <h1>Effectuer un dépôt</h1>
-    {{ form_start(form) }}
-        {{ form_row(form.compteSource) }}
-        {{ form_row(form.montant) }}
-        {{ form_row(form.submit) }}
-    {{ form_end(form) }}
+    <div class="depositContainer">
+        <div class="depositFormContainer">
+            <h1>Effectuer un dépôt</h1>
+            {{ form_start(form) }}
+                {{ form_row(form.compteSource) }}
+                {{ form_row(form.montant) }}
+                {{ form_row(form.submit) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}
