@@ -34,12 +34,12 @@ Ensure you have the following installed on your system:
    cd <challenge_web>
 
 
-2. Install PHP dependencies:
+2. **Install PHP dependencies**:
 
 
 composer install
 
-3. Set up environment variables: Copy the .env file to .env.local:
+3. **Set up environment variables: Copy the .env file to .env.local**:
 
 
 copy and paste the .env to .env.local and change :
@@ -48,7 +48,7 @@ copy and paste the .env to .env.local and change :
 DATABASE_URL="mysql://your_username:your_password@127.0.0.1:3306/bank" with your database information (msql for mysql or pgsql)
 
 
-4. Set up the database: Run the following commands to create the database and apply migrations:
+4. **Set up the database: Run the following commands to create the database and apply migrations**:
 
 
 
@@ -56,7 +56,7 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 
 
-5. Run the development server: Start the Symfony development server:
+5. **Run the development server: Start the Symfony development server**:
 
 symfony server:start
 
