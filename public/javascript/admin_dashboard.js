@@ -84,3 +84,60 @@ document.querySelectorAll('.userAccountsItem').forEach(item => {
         updateDashboard(userId);
     });
 });
+
+document.querySelectorAll('.userAccountsItem').forEach(item => {
+    item.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Récupérer l'ID de l'utilisateur sélectionné
+        const userId = this.getAttribute('data-user-id');
+
+        // Mettre à jour visuellement l'utilisateur sélectionné
+        document.querySelectorAll('.userAccountsItem').forEach(userItem => {
+            userItem.classList.remove('selected');
+        });
+        this.classList.add('selected'); // Ajoutez une classe CSS pour l'utilisateur sélectionné
+
+        // Mettre à jour le tableau de bord
+        updateDashboard(userId);
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const transactionsLinks = document.querySelectorAll('.transactionsActionsLinks');
+    const userLinks = document.querySelectorAll('.userAccountsItem');
+
+    let selectedUserId = null;
+
+    // Capture de l'utilisateur sélectionné
+    userLinks.forEach(userLink => {
+        userLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            selectedUserId = userLink.dataset.userId;
+
+            // Optionnel : mettre en évidence l'utilisateur sélectionné
+            userLinks.forEach(link => link.classList.remove('selected'));
+            userLink.classList.add('selected');
+        });
+    });
+
+    // Gestion des clics sur les actions de transaction
+    transactionsLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const action = link.dataset.action;
+            if (!action) return;
+
+            let url = `/transaction/${action}`;
+
+            if (selectedUserId) {
+                url += `/${selectedUserId}`;
+            }
+
+            // Redirection vers l'URL construite
+            window.location.href = url;
+        });
+    });
+});

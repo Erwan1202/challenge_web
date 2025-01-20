@@ -11,8 +11,7 @@
                 
                 {{ form_row(form.compteSource) }}  {# Affichez le champ pour sélectionner un compte source #}
                 {{ form_row(form.montant) }}       {# Affichez le champ pour le montant #}
-
-                <button type="submit">Retirer</button>
+                {{ form_row(form.submit) }}
                 
                 {{ form_end(form) }}
             </form>

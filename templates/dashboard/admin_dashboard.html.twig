@@ -21,16 +21,16 @@
         {% for user in users %}
             <a href="#" class="userAccountsItem" data-user-id="{{ user.id }}">
                 <div>
-                    <p>{{ user.nom }}</p> {# Affiche le nom de l'utilisateur #}
-                    <p>{{ user.prenom }}</p> {# Affiche le prénom de l'utilisateur #}
+                    <p>{{ user.nom }}</p>
+                    <p>{{ user.prenom }}</p>
                 </div>
                 <div>
-                    <p>{{ user.email }}</p> {# Affiche l'email de l'utilisateur #}
-                    <p>{{ user.telephone }}</p> {# Affiche le téléphone de l'utilisateur #}
+                    <p>{{ user.email }}</p>
+                    <p>{{ user.telephone }}</p>
                 </div>
             </a>
         {% else %}
-            <p>Aucun utilisateur trouvé.</p> {# Message si aucun utilisateur #}
+            <p>Aucun utilisateur trouvé.</p>
         {% endfor %}
     </div>
 {% endblock %}

@@ -450,3 +450,7 @@ main h1 {
 .userAccountsItem div p {
     margin: 0;
 }
+.userAccountsItem.selected {
+    background-color: var(--accent-color3);
+    color: black;
+}
