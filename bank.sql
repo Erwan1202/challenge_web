@@ -43,4 +43,4 @@ CREATE TABLE transactions (
 
 -- Remplissage de la table Utilisateurs
 INSERT INTO utilisateurs (nom, prenom, telephone, email, mdp_chiffre, role) VALUES
-('Doe', 'John', '0601020304', 'Doe.John@gmail.com', '123456', 'client')
+('Doe', 'John', '0601020304', 'Doe.John@gmail.com', '123456', 'client');
